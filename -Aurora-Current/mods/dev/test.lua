@@ -13,4 +13,4 @@
 --     print('EVENT: ' .. event)
 -- end)
 
--- UNLOCKAURORA()
+UNLOCKAURORA()

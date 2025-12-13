@@ -22,6 +22,7 @@ AU:NewModule('gamemenu', 1, function()
     frame:Hide()
     frame:SetScale(.9)
     frame:EnableMouse(true)
+    frame:SetFrameStrata('DIALOG')
 
     local yOffset = -60
     local buttonHeight = 22

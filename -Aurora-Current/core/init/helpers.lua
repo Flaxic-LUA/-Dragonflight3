@@ -10,15 +10,15 @@ _G.SlashCmdList['AURORA'] = function(msg)
         print('/load ADDONNAME - Load addon')
         print('/unload ADDONNAME - Unload addon')
     elseif msg == 'reset' then
-        -- AU.ui.StaticPopup_Show(
-        --     'Wipe AU_GlobalDB and reload UI?',
-        --     'Yes',
-        --     function()
+        AU.ui.StaticPopup_Show(
+            'Wipe AU_GlobalDB and reload UI?',
+            'Yes',
+            function()
                 _G.AU_GlobalDB = {}
                 ReloadUI()
-        --     end,
-        --     'No'
-        -- )
+            end,
+            'No'
+        )
     else
         AURORAToggleGUI()
     end
