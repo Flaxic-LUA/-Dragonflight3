@@ -1,0 +1,11 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Include file="common\lua.lua"/>
+    <Include file="common\data.lua"/>
+    <Include file="common\math.lua"/>
+    <Include file="common\hooks.lua"/>
+    <Include file="wow\common.lua"/>
+    <Include file="wow\timers.lua"/>
+    <Include file="wow\date.lua"/>
+    <Include file="wow\ui-tools.lua"/>
+    <Include file="wow\animations.lua"/>
+</Ui>

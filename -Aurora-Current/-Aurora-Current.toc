@@ -1,0 +1,10 @@
+## Interface: 10200
+## Title: |cFF00CCFFAUROR|r|CFFFFFFFFA|r - Current
+## Notes: The most updated Aurora version. (enabled by default)
+## Author: Guzruul
+## DefaultState: enabled
+## Dependencies: -Aurora-BIOS
+## SavedVariables: AU_GlobalDB
+## SavedVariablesPerCharacter:
+
+init.xml

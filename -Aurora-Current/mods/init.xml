@@ -1,0 +1,66 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <!-- DEV -->
+    <Include file="dev\test.lua"/>
+
+    <!-- ACTIONBARS -->
+    <Include file="actionbars\actionbars-tools.lua"/>
+    <Include file="actionbars\actionbars.lua"/>
+
+    <!-- BAGS -->
+    <Include file="bags\bagbar-tools.lua"/>
+    <Include file="bags\bagbar.lua"/>
+    <Include file="bags\bags-tools.lua"/>
+    <Include file="bags\bags.lua"/>
+
+    <!-- BUFFS -->
+    <Include file="buffs\buffs-tools.lua"/>
+    <Include file="buffs\buffs.lua"/>
+
+    <!-- CAST -->
+    <Include file="cast\cast-tools.lua"/>
+    <Include file="cast\cast.lua"/>
+
+    <!-- CHAT -->
+    <Include file="chat\chat.lua"/>
+
+    <!-- Fixes -->
+    <Include file="fixes\tempfixes.lua"/>
+
+
+    <!-- GENERAL -->
+    <Include file="general\addons.lua"/>
+    <Include file="general\bios.lua"/>
+    <Include file="general\combopoints.lua"/>
+    <Include file="general\cooldowns.lua"/>
+    <Include file="general\dock.lua"/>
+    <Include file="general\editmode.lua"/>
+
+    <!-- MICROMENU -->
+    <Include file="micromenu\micromenu-tools.lua"/>
+    <Include file="micromenu\micromenu.lua"/>
+
+    <!-- MINIMAP -->
+    <Include file="minimap\minimap-tools.lua"/>
+    <Include file="minimap\minimap.lua"/>
+
+    <!-- PANELS -->
+    <Include file="panels\gamemenu.lua"/>
+    <Include file="panels\spellbook.lua"/>
+    <Include file="panels\talents.lua"/>
+
+    <!-- UNITFRAMES -->
+    <Include file="unitframes\unitframes-tools.lua"/>
+    <Include file="unitframes\unitframes.lua"/>
+
+    <!-- XPREP -->
+    <Include file="xprep\xprep.lua"/>
+
+
+    <!-- GUI -->
+    <Include file="gui\base.lua"/>
+    <Include file="gui\extrapanels.lua"/>
+    <Include file="gui\extrapanels2.lua"/>
+    <Include file="gui\extrapanels3.lua"/>
+    <Include file="gui\extrapanels4.lua"/>
+    <Include file="gui\generator.lua"/>
+</Ui>

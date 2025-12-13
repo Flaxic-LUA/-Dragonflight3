@@ -1,0 +1,5 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Include file="core\polyfill.lua"/>
+    <Include file="core\slash.lua"/>
+    <Include file="core\bios.lua"/>
+</Ui>

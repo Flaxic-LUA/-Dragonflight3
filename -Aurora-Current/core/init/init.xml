@@ -1,0 +1,4 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Include file="init.lua"/>
+    <Include file="helpers.lua"/>
+</Ui>

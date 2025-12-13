@@ -1,0 +1,15 @@
+## Interface: 10200
+## Title: |cFF00CCFFAUROR|r|CFFFFFFFFA|r - BIOS
+## Notes: The BIOS system for Aurora.
+## Author: Guzruul
+## DefaultState: enabled
+## SavedVariables:
+## SavedVariablesPerCharacter:
+
+## X-Version-BIOS:      1.0
+## X-Version-Current:   1.0.0
+## X-Current-Patch:     Alpha BUILD 1
+## X-Version-LTS:       1.0.0
+## X-LTS-Patch:         N/A
+
+init.xml

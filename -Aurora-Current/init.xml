@@ -1,0 +1,14 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <!-- NAMESPACE -->
+    <Include file="core\namespace\namespace.lua"/>
+    <!-- TOOLS -->
+    <Include file="tools\init.xml"/>
+    <!-- INIT -->
+    <Include file="core\init\init.xml"/>
+    <!-- TABLES -->
+    <Include file="tables\init.xml"/>
+    <!-- LIBS -->
+    <Include file="libs\init.xml"/>
+    <!-- MODS -->
+    <Include file="mods\init.xml"/>
+</Ui>

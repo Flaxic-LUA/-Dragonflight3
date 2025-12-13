@@ -1,0 +1,5 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Include file="gamedata.lua"/>
+    <Include file="atlas.lua"/>
+    <Include file="profiles.lua"/>
+</Ui>

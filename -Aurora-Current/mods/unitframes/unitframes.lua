@@ -1,0 +1,44 @@
+UNLOCKAURORA()
+
+local setup = AU.setups.unitframes
+AU:NewDefaults('unitframes', setup:GenerateDefaults())
+
+AU:NewModule('unitframes', 1, 'PLAYER_LOGIN', function()
+    local playerPortrait = setup:CreateUnitFrame('player', 180, 70)
+    playerPortrait:SetPoint('BOTTOM', UIParent, 'BOTTOM', -170, 250)
+
+    local targetPortrait = setup:CreateUnitFrame('target', 180, 70)
+    targetPortrait:SetPoint('BOTTOM', UIParent, 'BOTTOM', 170, 250)
+
+    local totPortrait = setup:CreateUnitFrame('targettarget', 180, 70)
+    totPortrait:SetPoint('LEFT', targetPortrait, 'RIGHT', 60, 0)
+
+    local petPortrait = setup:CreateUnitFrame('pet', 180, 70)
+    petPortrait:SetPoint('RIGHT', playerPortrait, 'LEFT', -60, 0)
+
+    local petTargetPortrait = setup:CreateUnitFrame('pettarget', 180, 70)
+    petTargetPortrait:SetPoint('RIGHT', petPortrait, 'LEFT', -60, 0)
+
+    for i = 1, 4 do
+        local partyFrame = setup:CreateUnitFrame('party'..i, 180, 60)
+        if i == 1 then
+            partyFrame:SetPoint('TOPLEFT', UIParent, 'TOPLEFT', 20, -100)
+        else
+            partyFrame:SetPoint('TOPLEFT', setup.portraits[table.getn(setup.portraits)-1], 'BOTTOMLEFT', 0, -10)
+        end
+    end
+
+    AU.common.KillFrame(PlayerFrame)
+    AU.common.KillFrame(TargetFrame)
+    AU.common.KillFrame(PetFrame)
+    AU.common.KillFrame(PartyMemberFrame1)
+    AU.common.KillFrame(PartyMemberFrame2)
+    AU.common.KillFrame(PartyMemberFrame3)
+    AU.common.KillFrame(PartyMemberFrame4)
+
+    setup:OnUpdate()
+    setup:OnEvent()
+
+    local callbacks = setup:GenerateCallbacks()
+    AU:NewCallbacks('unitframes', callbacks)
+end)
