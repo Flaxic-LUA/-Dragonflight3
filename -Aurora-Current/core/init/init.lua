@@ -108,7 +108,6 @@ function init:CheckModuleVersions()
         AU.ui.StaticPopup_Show(msg,
             'Reset',
             function()
-                print('CheckModuleVersions: Resetting modules...')
                 for _, mod in pairs(mismatchModules) do
                     AU.profile[mod] = {}
                 end
@@ -118,14 +117,11 @@ function init:CheckModuleVersions()
                 local profileName = AU_GlobalDB.meta.characterProfiles[charKey] or charKey
                 init:ApplyDefaults(profileName)
                 AU.profile = AU_GlobalDB.profiles[profileName]
-                print('CheckModuleVersions: Running callbacks...')
                 for name, callback in pairs(AU.callbacks) do
                     local mod, opt = AU.lua.match(name, '(.*)%.(.*)')
                     callback(AU.profile[mod][opt])
                 end
-                print('CheckModuleVersions: Executing modules...')
                 init:ExecModules(true)
-                print('CheckModuleVersions: Done, no ReloadUI called from here')
             end,
             'Cancel',
             function()

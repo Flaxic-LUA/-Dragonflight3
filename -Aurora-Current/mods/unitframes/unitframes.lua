@@ -39,6 +39,13 @@ AU:NewModule('unitframes', 1, 'PLAYER_LOGIN', function()
     setup:OnUpdate()
     setup:OnEvent()
 
+    playerPortrait.hpBar.max = UnitHealthMax('player')
+    playerPortrait.hpBar:SetValue(UnitHealth('player'))
+    playerPortrait.powerBar.max = UnitManaMax('player')
+    playerPortrait.powerBar:SetValue(UnitMana('player'))
+    setup:UpdateNameText(playerPortrait)
+    setup:UpdateLevelColor(playerPortrait)
+
     local callbacks = setup:GenerateCallbacks()
     AU:NewCallbacks('unitframes', callbacks)
 end)

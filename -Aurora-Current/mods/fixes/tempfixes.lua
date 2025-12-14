@@ -9,7 +9,7 @@ AU:NewDefaults('tempfixes', {
 
 })
 
-AU:NewModule('tempfixes', 1, function()
+AU:NewModule('tempfixes', 1, 'PLAYER_ENTERING_WORLD', function()
     local tooltip = {}
 
     function tooltip:HookActionBars()
@@ -283,39 +283,32 @@ AU:NewModule('tempfixes', 1, function()
         self:HookMinimap()
     end
 
-    local f = CreateFrame'Frame'
-    f:RegisterEvent('PLAYER_ENTERING_WORLD')
-    f:SetScript('OnEvent', function()
-        if event == 'PLAYER_ENTERING_WORLD' then
-            this:UnregisterEvent('PLAYER_ENTERING_WORLD')
-            tooltip:HookActionBars()
-            tooltip:HookUnitFrames()
-            tooltip:HookMicroMenu()
-            tooltip:HookBuffs()
-            tooltip:HookMinimap()
 
-            local bagHookFrame = CreateFrame'Frame'
-            bagHookFrame.elapsed = 0
-            bagHookFrame:SetScript('OnUpdate', function()
-                this.elapsed = this.elapsed + arg1
-                if this.elapsed > 0.6 then
-                    tooltip:HookBags()
-                    this:SetScript('OnUpdate', nil)
-                end
-            end)
+    tooltip:HookActionBars()
+    tooltip:HookUnitFrames()
+    tooltip:HookMicroMenu()
+    tooltip:HookBuffs()
+    tooltip:HookMinimap()
+
+    local bagHookFrame = CreateFrame'Frame'
+    bagHookFrame.elapsed = 0
+    bagHookFrame:SetScript('OnUpdate', function()
+        this.elapsed = this.elapsed + arg1
+        if this.elapsed > 0.6 then
+            tooltip:HookBags()
+            this:SetScript('OnUpdate', nil)
         end
     end)
+
 
     local questTracker = CreateFrame('Frame', 'AU_QuestTracker', UIParent)
     questTracker:SetPoint('RIGHT', UIParent, 'RIGHT', -140, 200)
     questTracker:SetWidth(170)
     questTracker:SetHeight(10)
     questTracker:SetScale(.8)
-
     QuestWatchFrame:SetParent(questTracker)
     QuestWatchFrame:SetAllPoints(questTracker)
     QuestWatchFrame:SetFrameLevel(1)
-    -- QuestWatchFrame.SetPoint = function() end
 
     DurabilityFrame:ClearAllPoints()
     DurabilityFrame:SetPoint('RIGHT', UIParent, 'RIGHT', -15, 200)
