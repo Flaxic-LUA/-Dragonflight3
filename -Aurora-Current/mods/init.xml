@@ -34,6 +34,7 @@
     <Include file="general\cooldowns.lua"/>
     <Include file="general\dock.lua"/>
     <Include file="general\editmode.lua"/>
+    <Include file="general\firstrun.lua"/>
 
     <!-- MICROMENU -->
     <Include file="micromenu\micromenu-tools.lua"/>

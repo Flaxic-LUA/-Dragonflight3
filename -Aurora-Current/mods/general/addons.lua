@@ -111,8 +111,7 @@ AU:NewModule('addons', 1, function()
         local titleText = row:CreateFontString(nil, 'OVERLAY', 'GameFontNormal')
         titleText:SetPoint('LEFT', checkbox, 'RIGHT', 5, 0)
         local originalTitle = title or name
-        local strippedTitle = string.gsub(originalTitle, '|c%x%x%x%x%x%x%x%x', '')
-        strippedTitle = string.gsub(strippedTitle, '|r', '')
+        local strippedTitle = string.gsub(originalTitle, '|[cCrR]%x?%x?%x?%x?%x?%x?%x?%x?', '')
 
         local authorText = row:CreateFontString(nil, 'OVERLAY', 'GameFontNormal')
         authorText:SetPoint('LEFT', row, 'LEFT', 260, 0)

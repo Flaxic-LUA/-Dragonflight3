@@ -14,6 +14,8 @@ AU:NewModule('editmode', 1, 'PLAYER_ENTERING_WORLD', function()
     local registry = {frames = {}, panels = {}, elements = {}}
     local overlays = {}
     local gridFrame = nil
+    local lastMode = 'frames'
+    local lastDropdown = ''
 
     local function DrawGrid()
         local grid = CreateFrame('Frame', nil, UIParent)
@@ -76,10 +78,9 @@ AU:NewModule('editmode', 1, 'PLAYER_ENTERING_WORLD', function()
         else
             overlay:SetBackdropColor(0, 0.5, 1, 0.2)
             overlay:SetBackdropBorderColor(0, 0.8, 1, 1)
+            local text = AU.ui.Font(overlay, 12, label, {1, 1, 1}, 'CENTER', 'OUTLINE')
+            text:SetPoint('CENTER', overlay, 'CENTER', 0, 0)
         end
-
-        local text = AU.ui.Font(overlay, 12, label, {1, 1, 1}, 'CENTER', 'OUTLINE')
-        text:SetPoint('CENTER', overlay, 'CENTER', 0, 0)
 
         overlay:Hide()
         return overlay
@@ -88,16 +89,30 @@ AU:NewModule('editmode', 1, 'PLAYER_ENTERING_WORLD', function()
     local function SaveFramePosition(frame)
         local name = frame:GetName()
         if not name then return end
-        local x, y = floor(frame:GetLeft() + 0.5), floor(frame:GetTop() + 0.5)
-        AU.profile['editmode']['framePositions'][name] = {x = x, y = y}
+        local parent = frame:GetParent()
+        if parent and parent ~= UIParent then
+            local px, py = parent:GetCenter()
+            local fx, fy = frame:GetCenter()
+            AU.profile['editmode']['framePositions'][name] = {rx = fx - px, ry = fy - py, parent = parent:GetName()}
+        else
+            local x, y = floor(frame:GetLeft() + 0.5), floor(frame:GetTop() + 0.5)
+            AU.profile['editmode']['framePositions'][name] = {x = x, y = y}
+        end
     end
 
     local function RestoreFramePositions()
         for name, pos in pairs(AU.profile['editmode']['framePositions']) do
             local frame = getglobal(name)
-            if frame and pos.x and pos.y then
+            if frame then
                 frame:ClearAllPoints()
-                frame:SetPoint('TOPLEFT', UIParent, 'BOTTOMLEFT', pos.x, pos.y)
+                if pos.parent and pos.rx and pos.ry then
+                    local parent = getglobal(pos.parent)
+                    if parent then
+                        frame:SetPoint('CENTER', parent, 'CENTER', pos.rx, pos.ry)
+                    end
+                elseif pos.x and pos.y then
+                    frame:SetPoint('TOPLEFT', UIParent, 'BOTTOMLEFT', pos.x, pos.y)
+                end
             end
         end
     end
@@ -110,9 +125,16 @@ AU:NewModule('editmode', 1, 'PLAYER_ENTERING_WORLD', function()
         button:SetBackdropColor(0, 0.5, 1, 0.8)
         button:SetBackdropBorderColor(0, 0.8, 1, 1)
         button:SetScript('OnClick', function()
+            local parent = targetFrame:GetParent()
             targetFrame:ClearAllPoints()
-            local x, y = targetFrame:GetLeft() + xOffset, targetFrame:GetTop() + yOffset
-            targetFrame:SetPoint('TOPLEFT', UIParent, 'BOTTOMLEFT', x, y)
+            if parent and parent ~= UIParent then
+                local px, py = parent:GetCenter()
+                local fx, fy = targetFrame:GetCenter()
+                targetFrame:SetPoint('CENTER', parent, 'CENTER', (fx - px) + xOffset, (fy - py) + yOffset)
+            else
+                local x, y = targetFrame:GetLeft() + xOffset, targetFrame:GetTop() + yOffset
+                targetFrame:SetPoint('TOPLEFT', UIParent, 'BOTTOMLEFT', x, y)
+            end
             overlay:ClearAllPoints()
             overlay:SetPoint('CENTER', targetFrame, 'CENTER', 0, 0)
             SaveFramePosition(targetFrame)
@@ -144,8 +166,15 @@ AU:NewModule('editmode', 1, 'PLAYER_ENTERING_WORLD', function()
             if isDragging then
                 isDragging = false
                 overlay:StopMovingOrSizing()
+                local parent = targetFrame:GetParent()
                 targetFrame:ClearAllPoints()
-                targetFrame:SetPoint('CENTER', overlay, 'CENTER', 0, 0)
+                if parent and parent ~= UIParent then
+                    local px, py = parent:GetCenter()
+                    local ox, oy = overlay:GetCenter()
+                    targetFrame:SetPoint('CENTER', parent, 'CENTER', ox - px, oy - py)
+                else
+                    targetFrame:SetPoint('CENTER', overlay, 'CENTER', 0, 0)
+                end
                 SaveFramePosition(targetFrame)
             end
         end)
@@ -234,7 +263,7 @@ AU:NewModule('editmode', 1, 'PLAYER_ENTERING_WORLD', function()
         RegisterFrame('AU_RepBar', 'frames')
         RegisterFrame('AU_ChatFrame', 'frames')
         RegisterFrame('AU_Dock', 'frames')
-        RegisterFrame('AU_QuestTracker', 'frames')
+        RegisterFrame('QuestWatchFrame', 'frames')
         RegisterFrame('DurabilityFrame', 'frames')
         RegisterFrame('AU_WeaponFrame', 'frames')
         RegisterFrame('AuroraPetBar', 'frames')
@@ -244,8 +273,6 @@ AU:NewModule('editmode', 1, 'PLAYER_ENTERING_WORLD', function()
         RegisterFrame('AuroraParty3Frame', 'frames')
         RegisterFrame('AuroraParty4Frame', 'frames')
         RegisterFrame('AU_ComboPointsContainer', 'frames')
-
-        ActivateMode('frames')
     end)
 
     editFrame:SetScript('OnHide', function()
@@ -265,6 +292,7 @@ AU:NewModule('editmode', 1, 'PLAYER_ENTERING_WORLD', function()
         dropdown.text:SetText('Actionbuttons')
         dropdown.selectedValue = 'Actionbuttons'
         dropdown.popup:Hide()
+        lastDropdown = 'Actionbuttons'
         registry.elements = {}
         for i = 1, 12 do
             RegisterFrame('AuroraMainBarButton'..i, 'elements')
@@ -290,6 +318,7 @@ AU:NewModule('editmode', 1, 'PLAYER_ENTERING_WORLD', function()
         dropdown.text:SetText('Bagbar')
         dropdown.selectedValue = 'Bagbar'
         dropdown.popup:Hide()
+        lastDropdown = 'Bagbar'
         registry.elements = {}
         RegisterFrame('AU_MainBag', 'elements')
         RegisterFrame('AU_Bag0', 'elements')
@@ -304,6 +333,7 @@ AU:NewModule('editmode', 1, 'PLAYER_ENTERING_WORLD', function()
         dropdown.text:SetText('Minimap Cluster')
         dropdown.selectedValue = 'Minimap Cluster'
         dropdown.popup:Hide()
+        lastDropdown = 'Minimap Cluster'
         registry.elements = {}
         RegisterFrame('AU_GameTimeButton', 'elements')
         RegisterFrame('AU_MinimapZoomIn', 'elements')
@@ -316,6 +346,7 @@ AU:NewModule('editmode', 1, 'PLAYER_ENTERING_WORLD', function()
         dropdown.text:SetText('Micro Menu')
         dropdown.selectedValue = 'Micro Menu'
         dropdown.popup:Hide()
+        lastDropdown = 'Micro Menu'
         registry.elements = {}
         RegisterFrame('AU_MicroButton_Character', 'elements')
         RegisterFrame('AU_MicroButton_Spellbook', 'elements')
@@ -331,6 +362,7 @@ AU:NewModule('editmode', 1, 'PLAYER_ENTERING_WORLD', function()
         dropdown.text:SetText('Combopoints')
         dropdown.selectedValue = 'Combopoints'
         dropdown.popup:Hide()
+        lastDropdown = 'Combopoints'
         registry.elements = {}
         for i = 1, 5 do
             RegisterFrame('AUComboFrame'..i, 'elements')
@@ -344,6 +376,7 @@ AU:NewModule('editmode', 1, 'PLAYER_ENTERING_WORLD', function()
             dropdown.text:SetText(unit..' Parts')
             dropdown.selectedValue = unit..' Parts'
             dropdown.popup:Hide()
+            lastDropdown = unit..' Parts'
             registry.elements = {}
             local frame = getglobal('Aurora'..unit..'Frame')
             if frame then
@@ -356,10 +389,27 @@ AU:NewModule('editmode', 1, 'PLAYER_ENTERING_WORLD', function()
     end
     dropdown:Disable()
 
-    cb1:SetScript('OnClick', function() if cb1:GetChecked() then cb3:SetChecked(false) dropdown:Disable() ActivateMode('frames') else ActivateMode(nil) end end)
-    cb3:SetScript('OnClick', function() if cb3:GetChecked() then cb1:SetChecked(false) dropdown:Enable() ActivateMode('elements') else ActivateMode(nil) end end)
+    cb1:SetScript('OnClick', function() if cb1:GetChecked() then cb3:SetChecked(false) dropdown:Disable() lastMode = 'frames' ActivateMode('frames') else ActivateMode(nil) end end)
+    cb3:SetScript('OnClick', function() if cb3:GetChecked() then cb1:SetChecked(false) dropdown:Enable() lastMode = 'elements' ActivateMode('elements') else ActivateMode(nil) end end)
 
-    cb1:SetChecked(true)
+    local origOnShow = editFrame:GetScript('OnShow')
+    editFrame:SetScript('OnShow', function()
+        if origOnShow then origOnShow() end
+        if lastMode == 'elements' and lastDropdown ~= '' then
+            cb1:SetChecked(false)
+            cb3:SetChecked(true)
+            dropdown:Enable()
+            for i = 1, table.getn(dropdown.items) do
+                if dropdown.items[i].text:GetText() == lastDropdown then
+                    dropdown.items[i]:GetScript('OnClick')()
+                    break
+                end
+            end
+        else
+            cb1:SetChecked(true)
+            ActivateMode('frames')
+        end
+    end)
 
     local exitBtn = AU.ui.Button(editFrame, 'Exit', 100, 30)
     exitBtn:SetPoint('BOTTOMRIGHT', editFrame, 'BOTTOMRIGHT', -5, 5)

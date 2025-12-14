@@ -306,45 +306,19 @@ AU:NewModule('tempfixes', 1, function()
         end
     end)
 
-    local charName = UnitName('player')
-    local realmName = GetRealmName()
-    local charKey = charName .. '-' .. realmName
-
-    AU_GlobalDB.meta.installShown = AU_GlobalDB.meta.installShown or {}
-
-    if AU_GlobalDB.meta.installShown[charKey] then
-        return
-    end
-
-    local installFrame = AU.ui.CreatePaperDollFrame('AU_InstallPanel', UIParent, 350, 200, 2)
-    installFrame:SetPoint('CENTER', UIParent, 'CENTER', 0, 0)
-
-    local title = AU.ui.Font(installFrame, 16, 'Welcome to '..info.addonNameColor, {1, 1, 1}, 'CENTER')
-    title:SetPoint('TOP', installFrame, 'TOP', 0, -30)
-
-    local warning = AU.ui.Font(installFrame, 12, 'This is an |cffff0000ALPHA build|r. Expect bugs.\n\nGuzruul.', {1, 1, 1}, 'CENTER')
-    warning:SetPoint('CENTER', installFrame, 'CENTER', 0, 0)
-
-    local okayBtn = AU.ui.Button(installFrame, 'Okay', 100, 30)
-    okayBtn:SetPoint('BOTTOM', installFrame, 'BOTTOM', 0, 20)
-    okayBtn:SetScript('OnClick', function()
-        AU_GlobalDB.meta.installShown[charKey] = true
-        installFrame:Hide()
-    end)
-
-    local questTracker = CreateFrame("Frame", "AU_QuestTracker", UIParent)
-    questTracker:SetPoint("RIGHT", UIParent, -140, 200)
+    local questTracker = CreateFrame('Frame', 'AU_QuestTracker', UIParent)
+    questTracker:SetPoint('RIGHT', UIParent, 'RIGHT', -140, 200)
     questTracker:SetWidth(170)
-    questTracker:SetHeight(5)
+    questTracker:SetHeight(10)
     questTracker:SetScale(.8)
 
     QuestWatchFrame:SetParent(questTracker)
     QuestWatchFrame:SetAllPoints(questTracker)
     QuestWatchFrame:SetFrameLevel(1)
-    QuestWatchFrame.SetPoint = function() end
+    -- QuestWatchFrame.SetPoint = function() end
 
     DurabilityFrame:ClearAllPoints()
-    DurabilityFrame:SetPoint("RIGHT", UIParent, "RIGHT", -15, 200)
+    DurabilityFrame:SetPoint('RIGHT', UIParent, 'RIGHT', -15, 200)
     DurabilityFrame:SetScale(0.7)
 
     -- callbacks

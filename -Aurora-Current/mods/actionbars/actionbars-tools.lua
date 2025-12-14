@@ -188,7 +188,7 @@ function setup:CreateActionButton(parent, name, actionID)
 
     button:SetScript('OnClick', function()
         setup.lastUsedAction = this:GetID()
-        if AU.profile['actionbars']['animationTrigger'] == 'keypress' then
+        if AU.profile['actionbars']['animationTrigger'] == 'keypress' and HasAction(this:GetID()) then
             this.animation.active = 0
             this.animation:Show()
         end
@@ -321,7 +321,7 @@ function setup:CreateKeyboardRouting(mainButtons, multiButtons, bonusButtons)
                 setup.lastUsedAction = btn:GetID()
                 btn.pushed:Hide()
                 btn.highlight:Hide()
-                if AU.profile['actionbars']['animationTrigger'] == 'keypress' then
+                if AU.profile['actionbars']['animationTrigger'] == 'keypress' and HasAction(btn:GetID()) then
                     btn.animation.active = 0
                     btn.animation:Show()
                 end
@@ -331,7 +331,7 @@ function setup:CreateKeyboardRouting(mainButtons, multiButtons, bonusButtons)
             setup.lastUsedAction = setup.activeMainButtons[id]:GetID()
             setup.activeMainButtons[id].pushed:Hide()
             setup.activeMainButtons[id].highlight:Hide()
-            if AU.profile['actionbars']['animationTrigger'] == 'keypress' then
+            if AU.profile['actionbars']['animationTrigger'] == 'keypress' and HasAction(setup.activeMainButtons[id]:GetID()) then
                 setup.activeMainButtons[id].animation.active = 0
                 setup.activeMainButtons[id].animation:Show()
             end
@@ -364,7 +364,7 @@ function setup:CreateKeyboardRouting(mainButtons, multiButtons, bonusButtons)
             local btn = multiButtons[barNum][id]
             btn.pushed:Hide()
             btn.highlight:Hide()
-            if AU.profile['actionbars']['animationTrigger'] == 'keypress' then
+            if AU.profile['actionbars']['animationTrigger'] == 'keypress' and HasAction(btn:GetID()) then
                 btn.animation.active = 0
                 btn.animation:Show()
             end
