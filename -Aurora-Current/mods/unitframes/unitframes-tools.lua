@@ -707,10 +707,17 @@ function setup:UpdateHealthBarColor(portrait, unit)
         end
     end
     local _, class = UnitClass(unit)
-    if class and AU.tables['classcolors'][class] then
+    if class and AU.tables['classcolors'][class] and UnitIsPlayer(unit) then
         local color = AU.tables['classcolors'][class]
         portrait.hpBar:SetFillColor(color[1], color[2], color[3], 1)
+    else
+        local reaction = UnitReaction(unit, 'player')
+        if reaction and AU.tables['factioncolors'][reaction] then
+            local color = AU.tables['factioncolors'][reaction]
+            portrait.hpBar:SetFillColor(color[1], color[2], color[3], 1)
+        end
     end
+
 end
 
 function setup:UpdateBuffs(unitFrame)
@@ -1145,6 +1152,7 @@ function setup:OnEvent()
                             setup.lastTargetColor = {color[1], color[2], color[3]}
                         end
                     end
+
                 else
                     PlaySound('INTERFACESOUND_LOSTTARGETUNIT')
                 end
