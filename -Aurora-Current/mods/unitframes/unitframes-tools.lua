@@ -10,6 +10,7 @@ local setup = {
 
     textures = {
         portraitBorderBg = media['tex:unitframes:portrait_border_bg.blp'],
+        portraitBorderEdgeBg = media['tex:unitframes:portrait_border_edge_bg.blp'],
         portraitBorder = media['tex:unitframes:portrait_border_edge.blp'],
         portraitBorderAlt1 = media['tex:unitframes:portrait_border.blp'],
         portraitBorderAlt2 = media['tex:unitframes:portrait_border_base.blp'],
@@ -72,31 +73,37 @@ function setup:CreateUnitFrame(unit, width, height)
     unitFrame.unit = unit
     unitFrame:SetFrameStrata('BACKGROUND')
 
-    unitFrame.borderBg = unitFrame:CreateTexture(nil, 'BACKGROUND')
-    unitFrame.borderBg:SetTexture(self.textures.portraitBorderBg)
-    unitFrame.borderBg:SetSize(80, 80)
+    unitFrame.portraitFrame = CreateFrame('Frame', nil, unitFrame)
+    unitFrame.portraitFrame:SetSize(80, 80)
 
-    unitFrame.model = CreateFrame('PlayerModel', nil, unitFrame)
+    unitFrame.borderBg = unitFrame.portraitFrame:CreateTexture(nil, 'BACKGROUND')
+    unitFrame.borderBg:SetTexture(self.textures.portraitBorderEdgeBg)
+    unitFrame.borderBg:SetAllPoints(unitFrame.portraitFrame)
+
+    unitFrame.model = CreateFrame('PlayerModel', nil, unitFrame.portraitFrame)
     unitFrame.model:SetSize(80 + 15, 80 + 15)
+    unitFrame.model:SetPoint('CENTER', unitFrame.portraitFrame, 'CENTER', 0, 0)
     unitFrame.model.update = unit
     unitFrame.model.unit = unit
     table.insert(setup.portraitModels, unitFrame.model)
 
-    unitFrame.portrait2D = unitFrame:CreateTexture(nil, 'ARTWORK')
+    unitFrame.portrait2D = unitFrame.portraitFrame:CreateTexture(nil, 'ARTWORK')
     unitFrame.portrait2D:SetSize(80 - 26, 80 - 26)
+    unitFrame.portrait2D:SetPoint('CENTER', unitFrame.portraitFrame, 'CENTER', 0, 0)
     unitFrame.portrait2D:Hide()
 
-    unitFrame.classIcon = unitFrame:CreateTexture(nil, 'ARTWORK')
+    unitFrame.classIcon = unitFrame.portraitFrame:CreateTexture(nil, 'ARTWORK')
     unitFrame.classIcon:SetSize(80 - 26, 80 - 26)
+    unitFrame.classIcon:SetPoint('CENTER', unitFrame.portraitFrame, 'CENTER', 0, 0)
     unitFrame.classIcon:SetTexture(self.textures.classIcons)
     unitFrame.classIcon:Hide()
 
-    local borderFrame = CreateFrame('Frame', nil, unitFrame)
+    local borderFrame = CreateFrame('Frame', nil, unitFrame.portraitFrame)
     borderFrame:SetFrameLevel(unitFrame.model:GetFrameLevel() + 1)
-    borderFrame:SetAllPoints(unitFrame.borderBg)
+    borderFrame:SetAllPoints(unitFrame.portraitFrame)
     unitFrame.border = borderFrame:CreateTexture(nil, 'OVERLAY')
     unitFrame.border:SetTexture(self.textures.portraitBorder)
-    unitFrame.border:SetSize(80, 80)
+    unitFrame.border:SetAllPoints(unitFrame.portraitFrame)
 
     unitFrame.classBorderOverlay = borderFrame:CreateTexture(nil, 'OVERLAY')
     unitFrame.classBorderOverlay:SetPoint('CENTER', unitFrame.border, 'CENTER', 0, 0)
@@ -161,13 +168,9 @@ function setup:CreateUnitFrame(unit, width, height)
     end
 
     if unit == 'target' then
-        unitFrame.borderBg:SetPoint('RIGHT', unitFrame, 'RIGHT', 0, 0)
-        unitFrame.model:SetPoint('RIGHT', unitFrame, 'RIGHT', -13, 0)
-        unitFrame.portrait2D:SetPoint('RIGHT', unitFrame, 'RIGHT', -13, 0)
-        unitFrame.classIcon:SetPoint('RIGHT', unitFrame, 'RIGHT', -13, 0)
-        unitFrame.border:SetPoint('RIGHT', unitFrame, 'RIGHT', 0, 0)
+        unitFrame.portraitFrame:SetPoint('RIGHT', unitFrame, 'RIGHT', 0, 0)
         unitFrame.hpBar:SetFillDirection('LEFT_TO_RIGHT')
-        unitFrame.hpBar:SetPoint('RIGHT', unitFrame.border, 'LEFT', 3, -5)
+        unitFrame.hpBar:SetPoint('RIGHT', unitFrame.border, 'LEFT', 6, -5)
         unitFrame.hpBar.text:SetPoint('LEFT', unitFrame.hpBar, 'LEFT', 3, 0)
         unitFrame.hpBar.pctText:SetPoint('RIGHT', unitFrame.hpBar, 'RIGHT', -3, 0)
         unitFrame.powerBar:SetFillDirection('LEFT_TO_RIGHT')
@@ -178,20 +181,16 @@ function setup:CreateUnitFrame(unit, width, height)
         unitFrame.name:SetPoint('LEFT', unitFrame.infoBg, 'LEFT', 3, 1)
         unitFrame.level:SetPoint('RIGHT', unitFrame.infoBg, 'RIGHT', -7, 1)
         if unitFrame.pvpIcon then
-            unitFrame.pvpIconFrame:SetAllPoints(unitFrame.borderBg)
-            unitFrame.pvpIcon:SetPoint('CENTER', unitFrame.borderBg, 'RIGHT', 12, -3)
+            unitFrame.pvpIconFrame:SetAllPoints(unitFrame.portraitFrame)
+            unitFrame.pvpIcon:SetPoint('CENTER', unitFrame.portraitFrame, 'RIGHT', 12, -3)
         end
         unitFrame.hpBar.fill:SetTexture(media['tex:unitframes:aurora_hpbar_reversed.tga'])
         unitFrame.powerBar.fill:SetTexture(media['tex:unitframes:aurora_hpbar_reversed.tga'])
         -- debugframe(unitFrame)
     else
-        unitFrame.borderBg:SetPoint('LEFT', unitFrame, 'LEFT', 0, 0)
-        unitFrame.model:SetPoint('LEFT', unitFrame, 'LEFT', 13, 0)
-        unitFrame.portrait2D:SetPoint('LEFT', unitFrame, 'LEFT', 13, 0)
-        unitFrame.classIcon:SetPoint('LEFT', unitFrame, 'LEFT', 13, 0)
-        unitFrame.border:SetPoint('LEFT', unitFrame, 'LEFT', 0, 0)
+        unitFrame.portraitFrame:SetPoint('LEFT', unitFrame, 'LEFT', 0, 0)
         unitFrame.hpBar:SetFillDirection('RIGHT_TO_LEFT')
-        unitFrame.hpBar:SetPoint('LEFT', unitFrame.border, 'RIGHT', -3, -5)
+        unitFrame.hpBar:SetPoint('LEFT', unitFrame.border, 'RIGHT', -6, -5)
         unitFrame.hpBar.text:SetPoint('RIGHT', unitFrame.hpBar, 'RIGHT', 0, 0)
         unitFrame.hpBar.pctText:SetPoint('LEFT', unitFrame.hpBar, 'LEFT', 3, 0)
         unitFrame.powerBar:SetFillDirection('RIGHT_TO_LEFT')
@@ -202,8 +201,8 @@ function setup:CreateUnitFrame(unit, width, height)
         unitFrame.name:SetPoint('LEFT', unitFrame.infoBg, 'LEFT', 5, 1)
         unitFrame.level:SetPoint('RIGHT', unitFrame.infoBg, 'RIGHT', -7, 1)
         if unitFrame.pvpIcon then
-            unitFrame.pvpIconFrame:SetAllPoints(unitFrame.borderBg)
-            unitFrame.pvpIcon:SetPoint('CENTER', unitFrame.borderBg, 'LEFT', 5, -3)
+            unitFrame.pvpIconFrame:SetAllPoints(unitFrame.portraitFrame)
+            unitFrame.pvpIcon:SetPoint('CENTER', unitFrame.portraitFrame, 'LEFT', 5, -3)
         end
     end
     -- debugframe(unitFrame)
@@ -1565,7 +1564,7 @@ end
 
 local function GetPortraitModelOffset(size)
     local minSize, maxSize = 40, 120
-    local minOffset, maxOffset = 21, 37
+    local minOffset, maxOffset = 17, 45
     local offset = minOffset + (size - minSize) * (maxOffset - minOffset) / (maxSize - minSize)
     return offset
 end
@@ -1803,6 +1802,7 @@ function setup:GenerateCallbacks()
                 local portrait = setup.portraits[j]
                 if (frame.key == 'party' and string.find(portrait.unit, 'party')) or portrait.unit == frame.key then
                     local offset = GetPortraitModelOffset(value)
+                    portrait.portraitFrame:SetSize(value, value)
                     portrait.borderBg:SetSize(value, value)
                     portrait.model:SetSize(value - offset, value - offset)
                     portrait.portrait2D:SetSize(value - offset, value - offset)
@@ -2266,18 +2266,22 @@ function setup:GenerateCallbacks()
             for j = 1, table.getn(setup.portraits) do
                 local portrait = setup.portraits[j]
                 if (frame.key == 'party' and string.find(portrait.unit, 'party')) or portrait.unit == frame.key then
-                    local tex, glowTex
+                    local tex, glowTex, bgTex
                     if value == 'portrait_border_edge' then
                         tex = setup.textures.portraitBorder
                         glowTex = setup.textures.portraitBorderGlow
+                        bgTex = setup.textures.portraitBorderEdgeBg
                     elseif value == 'portrait_border' then
                         tex = setup.textures.portraitBorderAlt1
                         glowTex = setup.textures.portraitBorderGlowAlt
+                        bgTex = setup.textures.portraitBorderBg
                     elseif value == 'portrait_border_base' then
                         tex = setup.textures.portraitBorderAlt2
                         glowTex = setup.textures.portraitBorderGlowAlt
+                        bgTex = setup.textures.portraitBorderBg
                     end
                     portrait.border:SetTexture(tex)
+                    portrait.borderBg:SetTexture(bgTex)
                     if portrait.model.combatGlow then portrait.model.combatGlow:SetTexture(glowTex) end
                     if portrait.model.restingGlow then portrait.model.restingGlow:SetTexture(glowTex) end
                 end
@@ -2297,12 +2301,14 @@ function setup:GenerateCallbacks()
                     local borderTexture = (AU_GlobalDB and AU.profile['unitframes'] and AU.profile['unitframes'][borderKey]) or 'portrait_border_edge'
                     if value then
                         portrait.border:SetTexCoord(1, 0, 0, 1)
+                        portrait.borderBg:SetTexCoord(1, 0, 0, 1)
                         if borderTexture == 'portrait_border_edge' then
                             if portrait.model.combatGlow then portrait.model.combatGlow:SetTexCoord(1, 0, 0, 1) end
                             if portrait.model.restingGlow then portrait.model.restingGlow:SetTexCoord(1, 0, 0, 1) end
                         end
                     else
                         portrait.border:SetTexCoord(0, 1, 0, 1)
+                        portrait.borderBg:SetTexCoord(0, 1, 0, 1)
                         if borderTexture == 'portrait_border_edge' then
                             if portrait.model.combatGlow then portrait.model.combatGlow:SetTexCoord(0, 1, 0, 1) end
                             if portrait.model.restingGlow then portrait.model.restingGlow:SetTexCoord(0, 1, 0, 1) end
