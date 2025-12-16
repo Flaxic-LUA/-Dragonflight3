@@ -34,7 +34,7 @@
     <Include file="general\cooldowns.lua"/>
     <Include file="general\dock.lua"/>
     <Include file="general\editmode.lua"/>
-    <!-- <Include file="general\error.lua"/> -->
+    <Include file="general\error.lua"/>
     <Include file="general\firstrun.lua"/>
 
     <!-- MICROMENU -->
@@ -46,6 +46,7 @@
     <Include file="minimap\minimap.lua"/>
 
     <!-- PANELS -->
+    <Include file="panels\characterframe.lua"/>
     <Include file="panels\gamemenu.lua"/>
     <Include file="panels\questlog.lua"/>
     <Include file="panels\spellbook.lua"/>

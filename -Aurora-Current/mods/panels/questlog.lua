@@ -47,7 +47,7 @@ AU:NewModule('questlog', 1, function()
     rightBg:SetPoint('TOPLEFT', customBg, 'TOPLEFT', 330, -60)
     rightBg:SetPoint('BOTTOMRIGHT', customBg, 'BOTTOMRIGHT', -25, -173)
 
-    local bookmark = customBg:CreateTexture(nil, 'ARTWORK')
+    local bookmark = customBg:CreateTexture(nil, 'OVERLAY')
     bookmark:SetTexture(media['tex:panels:spellbook_bookmark.blp'])
     bookmark:SetPoint('TOP', customBg, 'TOP', 7, -55)
     bookmark:SetSize(50, 400)

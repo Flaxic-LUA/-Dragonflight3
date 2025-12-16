@@ -1309,9 +1309,13 @@ function AU.ui.CreatePaperDollFrame(name, parent, width, height, frameStyle)
         label:SetText(text)
         tab.Text = label
 
-        local textWidth = label:GetStringWidth()
-        local finalTabWidth = textWidth + 50
-        tab:SetSize(finalTabWidth, 32)
+        if tabWidth then
+            tab:SetSize(tabWidth, 32)
+        else
+            local textWidth = label:GetStringWidth()
+            local finalTabWidth = textWidth + 50
+            tab:SetSize(finalTabWidth, 32)
+        end
 
         -- State functions
         function tab:SetSelected(selected)
