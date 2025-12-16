@@ -46,3 +46,47 @@ function AU.common.KillFrame(frame)
         frame:EnableKeyboard(false)
     end
 end
+
+function AU.common.MakeFrameResizable(targetFrame, minWidth, minHeight)
+    targetFrame:SetResizable(true)
+    if minWidth and minHeight then
+        targetFrame:SetMinResize(minWidth, minHeight)
+    end
+
+    local corners = {'BOTTOMRIGHT', 'TOPRIGHT', 'TOPLEFT', 'BOTTOMLEFT'}
+
+    for i, pointName in corners do
+        local edge = CreateFrame('Frame', nil, targetFrame)
+        edge:SetSize(10, 10)
+        edge:SetPoint(pointName, targetFrame, pointName, 0, 0)
+        edge:EnableMouse(true)
+        edge:SetAlpha(0)
+
+        local localPoint = pointName
+        edge:SetScript('OnMouseDown', function()
+            targetFrame:StartSizing(localPoint)
+        end)
+
+        edge:SetScript('OnMouseUp', function()
+            targetFrame:StopMovingOrSizing()
+        end)
+    end
+end
+
+function AU.common.MakeFrameMovable(targetFrame)
+    targetFrame:SetMovable(true)
+
+    local moveHandle = CreateFrame('Frame', nil, targetFrame)
+    moveHandle:SetAllPoints(targetFrame)
+    moveHandle:EnableMouse(true)
+    moveHandle:SetAlpha(0)
+
+    moveHandle:SetScript('OnMouseDown', function()
+        targetFrame:StartMoving()
+    end)
+
+    moveHandle:SetScript('OnMouseUp', function()
+        targetFrame:StopMovingOrSizing()
+    end)
+end
+

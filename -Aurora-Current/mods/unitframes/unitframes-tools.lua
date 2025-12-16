@@ -1564,7 +1564,7 @@ end
 
 local function GetPortraitModelOffset(size)
     local minSize, maxSize = 40, 120
-    local minOffset, maxOffset = 17, 45
+    local minOffset, maxOffset = 17, 50
     local offset = minOffset + (size - minSize) * (maxOffset - minOffset) / (maxSize - minSize)
     return offset
 end
