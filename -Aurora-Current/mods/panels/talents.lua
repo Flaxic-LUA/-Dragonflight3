@@ -44,6 +44,7 @@ AU:NewModule('talents', 1, function()
         frame:SetScale(.9)
         frame:EnableMouse(true)
         SetPortraitTexture(frame.portrait, 'player')
+        AU.setups.talentsBg = frame.Bg
 
         local closeButton = AU.ui.CreateRedButton(frame, 'close', function()
             frame:Hide()
@@ -133,6 +134,11 @@ AU:NewModule('talents', 1, function()
             bgBottomLeft:SetAlpha(0.7)
             bgBottomRight:SetTexture(base .. 'BottomRight')
             bgBottomRight:SetAlpha(0.7)
+
+            treeFrames[i].bgTopLeft = bgTopLeft
+            treeFrames[i].bgTopRight = bgTopRight
+            treeFrames[i].bgBottomLeft = bgBottomLeft
+            treeFrames[i].bgBottomRight = bgBottomRight
 
             local borderTop = treeFrame:CreateTexture(nil, 'OVERLAY')
             borderTop:SetTexture('Interface\\Buttons\\WHITE8X8')
@@ -488,6 +494,7 @@ AU:NewModule('talents', 1, function()
                 end
             end
         end
+        AU.setups.talentsTreeFrames = treeFrames
     end
 
     local function ToggleFrame()

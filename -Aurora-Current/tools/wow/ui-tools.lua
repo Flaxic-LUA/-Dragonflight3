@@ -1344,6 +1344,28 @@ function AU.ui.CreatePaperDollFrame(name, parent, width, height, frameStyle)
             end
         end
 
+        function tab:Enable()
+            left:SetVertexColor(1, 1, 1)
+            right:SetVertexColor(1, 1, 1)
+            middle:SetVertexColor(1, 1, 1)
+            leftSel:SetVertexColor(1, 1, 1)
+            rightSel:SetVertexColor(1, 1, 1)
+            middleSel:SetVertexColor(1, 1, 1)
+            label:SetTextColor(1, 0.82, 0)
+            tab:EnableMouse(1)
+        end
+
+        function tab:Disable()
+            left:SetVertexColor(0.5, 0.5, 0.5)
+            right:SetVertexColor(0.5, 0.5, 0.5)
+            middle:SetVertexColor(0.5, 0.5, 0.5)
+            leftSel:SetVertexColor(0.5, 0.5, 0.5)
+            rightSel:SetVertexColor(0.5, 0.5, 0.5)
+            middleSel:SetVertexColor(0.5, 0.5, 0.5)
+            label:SetTextColor(0.5, 0.5, 0.5)
+            tab:EnableMouse(0)
+        end
+
         local numTabs = table.getn(frame.Tabs)
 
         if numTabs == 0 then

@@ -26,7 +26,6 @@
     <!-- Fixes -->
     <Include file="fixes\tempfixes.lua"/>
 
-
     <!-- GENERAL -->
     <Include file="general\addons.lua"/>
     <Include file="general\bios.lua"/>
@@ -34,8 +33,9 @@
     <Include file="general\cooldowns.lua"/>
     <Include file="general\dock.lua"/>
     <Include file="general\editmode.lua"/>
-    <Include file="general\error.lua"/>
+    <!-- <Include file="general\error.lua"/> -->
     <Include file="general\firstrun.lua"/>
+    <Include file="general\uiparent.lua"/>
 
     <!-- MICROMENU -->
     <Include file="micromenu\micromenu-tools.lua"/>
@@ -48,7 +48,11 @@
     <!-- PANELS -->
     <Include file="panels\characterframe.lua"/>
     <Include file="panels\gamemenu.lua"/>
+    <Include file="panels\help.lua"/>
+    <Include file="panels\keybindingframe.lua"/>
+    <Include file="panels\macroframe.lua"/>
     <Include file="panels\questlog.lua"/>
+    <Include file="panels\socialframe.lua"/>
     <Include file="panels\spellbook.lua"/>
     <Include file="panels\talents.lua"/>
 
@@ -58,7 +62,6 @@
 
     <!-- XPREP -->
     <Include file="xprep\xprep.lua"/>
-
 
     <!-- GUI -->
     <Include file="gui\base.lua"/>

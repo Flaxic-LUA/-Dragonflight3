@@ -36,18 +36,23 @@ AU:NewModule('characterframe', 1,'PLAYER_ENTERING_WORLD',function()
     customBg:SetFrameLevel(CharacterFrame:GetFrameLevel() + 1)
     customBg.Bg:SetDrawLayer('BACKGROUND', -1)
     CharacterFramePortrait:SetParent(customBg)
-    CharacterFramePortrait:SetDrawLayer('BACKGROUND', 0)
+    CharacterFramePortrait:SetDrawLayer('BORDER', 0)
+
+    AU.setups.characterBg = customBg.Bg
 
     local characterBg = customBg:CreateTexture(nil, 'OVERLAY')
     characterBg:SetTexture('Interface\\Buttons\\WHITE8X8')
     characterBg:SetPoint('TOPLEFT', customBg, 'TOPLEFT', 55, -60)
     characterBg:SetPoint('BOTTOMRIGHT', customBg, 'BOTTOMRIGHT', -55, 60)
     characterBg:SetVertexColor(0, 0, 0, .3)
-    characterBg:Show()
+    characterBg:Hide()
+    AU.setups.characterBgTexture = characterBg
+    AU.setups.characterModel = CharacterModelFrame
 
-    local closeButton = AU.ui.CreateRedButton(CharacterFrame, 'close', function() CharacterFrame:Hide() end)
+    local closeButton = AU.ui.CreateRedButton(customBg, 'close', function() CharacterFrame:Hide() end)
     closeButton:SetPoint('TOPRIGHT', customBg, 'TOPRIGHT', 0, -1)
     closeButton:SetSize(20, 20)
+    closeButton:SetFrameLevel(customBg:GetFrameLevel() + 3)
 
     customBg:AddTab('Character', function()
         characterBg:Show()
@@ -82,6 +87,48 @@ AU:NewModule('characterframe', 1,'PLAYER_ENTERING_WORLD',function()
     end, 60)
 
     tinsert(UISpecialFrames, 'AU_CharacterCustomBg')
+
+    local originalToggleCharacter = _G.ToggleCharacter
+    _G.ToggleCharacter = function(tab)
+        originalToggleCharacter(tab)
+        if CharacterFrame:IsVisible() and customBg.Tabs then
+            local tabIndex = nil
+            local hasPet = HasPetUI()
+
+            if tab == 'PaperDollFrame' then
+                tabIndex = 1
+            elseif tab == 'PetPaperDollFrame' and hasPet then
+                tabIndex = 2
+            elseif tab == 'ReputationFrame' then
+                tabIndex = hasPet and 3 or 2
+            elseif tab == 'SkillFrame' then
+                tabIndex = hasPet and 4 or 3
+            elseif tab == 'HonorFrame' then
+                tabIndex = hasPet and 5 or 4
+            end
+
+            local selectedTab = customBg.Tabs[tabIndex]
+            if selectedTab then
+                selectedTab:GetScript('OnClick')()
+            end
+        end
+    end
+
+    local slots = {'Head', 'Neck', 'Shoulder', 'Shirt', 'Chest', 'Waist', 'Legs', 'Feet', 'Wrist', 'Hands', 'Finger0', 'Finger1', 'Trinket0', 'Trinket1', 'Back', 'MainHand', 'SecondaryHand', 'Ranged', 'Tabard', 'Ammo'}
+    for _, slot in slots do
+        local button = getglobal('Character' .. slot .. 'Slot')
+        if button then
+            local icon = getglobal('Character' .. slot .. 'SlotIconTexture')
+            if icon then
+                local highlight = button:CreateTexture(nil, 'HIGHLIGHT')
+                highlight:SetPoint('TOPLEFT', icon, 'TOPLEFT', -6, 6)
+                highlight:SetPoint('BOTTOMRIGHT', icon, 'BOTTOMRIGHT', 6, -6)
+                highlight:SetTexture(media['tex:actionbars:btn_highlight_strong.blp'])
+                highlight:SetBlendMode('ADD')
+                button:SetHighlightTexture(highlight)
+            end
+        end
+    end
 
     -- callbacks
     local callbacks = {}

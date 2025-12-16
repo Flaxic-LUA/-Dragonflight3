@@ -12,7 +12,7 @@ AU:NewModule('questlog', 1, function()
         local region = regions[i]
         if region:GetObjectType() == 'Texture' then
             local texture = region:GetTexture()
-            if texture and string.find(texture, 'QuestLog') then
+            if texture and string.find(texture, 'QuestLog') and not string.find(texture, 'Highlight') and not string.find(texture, 'Check') then
                 region:Hide()
             end
         end
@@ -23,6 +23,7 @@ AU:NewModule('questlog', 1, function()
     customBg:SetPoint('TOPLEFT', QuestLogFrame, 'TOPLEFT', 12, -12)
     customBg:SetPoint('BOTTOMRIGHT', QuestLogFrame, 'BOTTOMRIGHT', -91, 50)
     customBg:SetFrameLevel(QuestLogFrame:GetFrameLevel() - 1)
+    AU.setups.questlogBg = customBg.Bg
 
     tinsert(UISpecialFrames, 'AU_QuestLogCustomBg')
 
@@ -40,21 +41,45 @@ AU:NewModule('questlog', 1, function()
     local leftBg = customBg:CreateTexture(nil, 'ARTWORK')
     leftBg:SetTexture(media['tex:panels:questlog_left_bg.blp'])
     leftBg:SetPoint('TOPLEFT', customBg, 'TOPLEFT', 1, -60)
-    leftBg:SetPoint('BOTTOMRIGHT', customBg, 'BOTTOMRIGHT', -340, -310)
+    leftBg:SetPoint('BOTTOM', customBg, 'BOTTOM', 0, -310)
+    leftBg:SetPoint('RIGHT', customBg, 'CENTER', -10, 0)
 
     local rightBg = customBg:CreateTexture(nil, 'ARTWORK')
     rightBg:SetTexture(media['tex:panels:questlog_right_bg.blp'])
-    rightBg:SetPoint('TOPLEFT', customBg, 'TOPLEFT', 330, -60)
-    rightBg:SetPoint('BOTTOMRIGHT', customBg, 'BOTTOMRIGHT', -25, -173)
+    rightBg:SetPoint('TOPRIGHT', customBg, 'TOPRIGHT', -25, -60)
+    rightBg:SetPoint('BOTTOM', customBg, 'BOTTOM', 0, -173)
+    rightBg:SetPoint('LEFT', customBg, 'CENTER', 10, 0)
 
     local bookmark = customBg:CreateTexture(nil, 'OVERLAY')
     bookmark:SetTexture(media['tex:panels:spellbook_bookmark.blp'])
     bookmark:SetPoint('TOP', customBg, 'TOP', 7, -55)
     bookmark:SetSize(50, 400)
 
-    local closeButton = AU.ui.CreateRedButton(QuestLogFrame, 'close', function() QuestLogFrame:Hide() end)
+    AU.setups.questlogTopWood = topWood
+    AU.setups.questlogLeftBg = leftBg
+    AU.setups.questlogRightBg = rightBg
+    AU.setups.questlogBookmark = bookmark
+
+    local closeButton = AU.ui.CreateRedButton(customBg, 'close', function() HideUIPanel(QuestLogFrame) end)
     closeButton:SetPoint('TOPRIGHT', customBg, 'TOPRIGHT', 0, -1)
     closeButton:SetSize(20, 20)
+    closeButton:SetFrameLevel(customBg:GetFrameLevel() + 3)
+
+    for i = 1, 10 do
+        local item = getglobal('QuestLogItem' .. i)
+        if item then
+            local icon = getglobal('QuestLogItem' .. i .. 'IconTexture')
+            if icon then
+                local highlight = item:CreateTexture(nil, 'HIGHLIGHT')
+                -- highlight:SetSize(39, 39)
+                highlight:SetPoint('TOPLEFT', icon, 'TOPLEFT', -6, 6)
+                highlight:SetPoint('BOTTOMRIGHT', icon, 'BOTTOMRIGHT', 6, -6)
+                highlight:SetTexture(media['tex:actionbars:btn_highlight_strong.blp'])
+                highlight:SetBlendMode('ADD')
+                item:SetHighlightTexture(highlight)
+            end
+        end
+    end
 
     -- callbacks
     local helpers = {}

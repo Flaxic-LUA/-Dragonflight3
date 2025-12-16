@@ -24,6 +24,7 @@ AU:NewModule('spellbook', 1, 'PLAYER_ENTERING_WORLD', function()
     spellbook:SetFrameLevel(25)
     spellbook:EnableMouse(true)
     spellbook:SetScale(.9)
+    AU.setups.spellbookBg = spellbook.Bg
 
     local leftPage = spellbook:CreateTexture(nil, "ARTWORK")
     leftPage:SetTexture(media['tex:panels:spellbook_right_page.blp'])
@@ -94,6 +95,11 @@ AU:NewModule('spellbook', 1, 'PLAYER_ENTERING_WORLD', function()
     bookmark:SetPoint("TOPRIGHT", leftPage, "TOPRIGHT", 45, 0)
     bookmark:SetWidth(50)
     bookmark:SetHeight(512)
+
+    AU.setups.spellbookLeftPage = leftPage
+    AU.setups.spellbookRightPage = rightPage
+    AU.setups.spellbookTopWood = topWood
+    AU.setups.spellbookBookmark = bookmark
 
     spellbook.selectedTabIndex = 1
     spellbook.currentPage = 1

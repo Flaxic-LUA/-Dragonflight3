@@ -616,38 +616,18 @@ end
 function setup:UpdateClassificationBorder(unitFrame)
     if unitFrame.unit ~= 'target' then return end
     if not UnitExists('target') then
-        if unitFrame.classBorderOverlay then unitFrame.classBorderOverlay:Hide() end
         return
     end
     local classification = UnitClassification('target')
-    if unitFrame.classBorderOverlay then unitFrame.classBorderOverlay:Hide() end
     if classification == 'worldboss' then
         unitFrame.border:SetTexture(self.textures.borderBoss)
         unitFrame.border:SetTexCoord(0.25, 0.75, 0.25, 0.75)
-        if unitFrame.classBorderOverlay then
-            unitFrame.classBorderOverlay:SetTexture(self.textures.borderBoss)
-            unitFrame.classBorderOverlay:SetTexCoord(0.125, 0.875, 0.125, 0.875)
-            unitFrame.classBorderOverlay:SetSize(unitFrame.border:GetWidth() * 1.6, unitFrame.border:GetHeight() * 1.6)
-            unitFrame.classBorderOverlay:Show()
-        end
     elseif classification == 'rareelite' or classification == 'rare' then
         unitFrame.border:SetTexture(self.textures.borderRare)
         unitFrame.border:SetTexCoord(0.25, 0.75, 0.25, 0.75)
-        if unitFrame.classBorderOverlay then
-            unitFrame.classBorderOverlay:SetTexture(self.textures.borderRare)
-            unitFrame.classBorderOverlay:SetTexCoord(0.125, 0.875, 0.125, 0.875)
-            unitFrame.classBorderOverlay:SetSize(unitFrame.border:GetWidth() * 1.6, unitFrame.border:GetHeight() * 1.6)
-            unitFrame.classBorderOverlay:Show()
-        end
     elseif classification == 'elite' then
         unitFrame.border:SetTexture(self.textures.borderElite)
         unitFrame.border:SetTexCoord(0.25, 0.75, 0.25, 0.75)
-        if unitFrame.classBorderOverlay then
-            unitFrame.classBorderOverlay:SetTexture(self.textures.borderElite)
-            unitFrame.classBorderOverlay:SetTexCoord(0.125, 0.875, 0.125, 0.875)
-            unitFrame.classBorderOverlay:SetSize(unitFrame.border:GetWidth() * 1.6, unitFrame.border:GetHeight() * 1.6)
-            unitFrame.classBorderOverlay:Show()
-        end
     else
         unitFrame.border:SetTexture(self.textures.portraitBorder)
         local flipKey = 'targetFlipPortraitBorder'
@@ -657,7 +637,6 @@ function setup:UpdateClassificationBorder(unitFrame)
         else
             unitFrame.border:SetTexCoord(0, 1, 0, 1)
         end
-        if unitFrame.classBorderOverlay then unitFrame.classBorderOverlay:Hide() end
     end
 end
 
