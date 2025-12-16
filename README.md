@@ -12,15 +12,23 @@ A comprehensive UI overhaul for World of Warcraft Vanilla 1.12.1.
 
 ## Screenshots
 
-![Screenshot 0](screenshots/prev0.PNG)
-![Screenshot 1](screenshots/prev1.PNG)
-![Screenshot 2](screenshots/prev2.PNG)
-![Screenshot 3](screenshots/prev3.PNG)
-![Screenshot 4](screenshots/prev4.PNG)
-![Screenshot 5](screenshots/prev5.PNG)
-![Screenshot 6](screenshots/prev6.PNG)
-![Screenshot 7](screenshots/prev7.PNG)
-![Screenshot 8](screenshots/prev8.PNG)
+<table>
+<tr>
+<td><img src="screenshots/prev0.PNG" width="300"></td>
+<td><img src="screenshots/prev1.PNG" width="300"></td>
+<td><img src="screenshots/prev2.PNG" width="300"></td>
+</tr>
+<tr>
+<td><img src="screenshots/prev3.PNG" width="300"></td>
+<td><img src="screenshots/prev4.PNG" width="300"></td>
+<td><img src="screenshots/prev5.PNG" width="300"></td>
+</tr>
+<tr>
+<td><img src="screenshots/prev6.PNG" width="300"></td>
+<td><img src="screenshots/prev7.PNG" width="300"></td>
+<td><img src="screenshots/prev8.PNG" width="300"></td>
+</tr>
+</table>
 
 ## Installation
 
