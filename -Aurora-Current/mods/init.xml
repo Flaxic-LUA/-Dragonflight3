@@ -48,6 +48,7 @@
     <!-- PANELS -->
     <Include file="panels\characterframe.lua"/>
     <Include file="panels\gamemenu.lua"/>
+    <Include file="panels\gossipframe.lua"/>
     <Include file="panels\help.lua"/>
     <Include file="panels\keybindingframe.lua"/>
     <Include file="panels\macroframe.lua"/>
