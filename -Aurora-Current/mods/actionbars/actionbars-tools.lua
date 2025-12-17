@@ -227,6 +227,7 @@ end
 
 function setup:CreateActionBar(parent, name, count, startID)
     local bar = CreateFrame('Frame', name, parent)
+    bar:SetFrameStrata('BACKGROUND')
     bar:SetSize(count * self.buttonSize + (count - 1) * 3, self.buttonSize)
     bar.buttons = {}
 

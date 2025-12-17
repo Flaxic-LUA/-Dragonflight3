@@ -3,10 +3,6 @@ UNLOCKAURORA()
 AU:NewDefaults('spellbook', {
     version = {value = '1.0'},
     enabled = {value = true},
-    gui = {
-        {indexRange = {1, 1}, tab = 'spellbook', subtab = 1},
-    },
-
 })
 
 AU:NewModule('spellbook', 1, 'PLAYER_ENTERING_WORLD', function()

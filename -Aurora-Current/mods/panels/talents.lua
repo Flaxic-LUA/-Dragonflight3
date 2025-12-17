@@ -3,10 +3,6 @@ UNLOCKAURORA()
 AU:NewDefaults('talents', {
     enabled = {value = true},
     version = {value = '1.0'},
-    gui = {
-        {tab = 'template', subtab = 'mainbar', categories = 'General'},
-    },
-
 })
 
 AU:NewModule('talents', 1, function()

@@ -4,10 +4,6 @@ UNLOCKAURORA()
 AU:NewDefaults('gamemenu', {
     version = {value = '1.0'},
     enabled = {value = true},
-    gui = {
-        {indexRange = {1, 1}, tab = 'gamemenu', subtab = 1},
-    },
-
 })
 
 AU:NewModule('gamemenu', 1, function()

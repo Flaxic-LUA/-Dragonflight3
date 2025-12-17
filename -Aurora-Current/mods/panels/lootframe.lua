@@ -1,0 +1,100 @@
+UNLOCKAURORA()
+
+AU:NewDefaults('lootframe', {
+    enabled = {value = true},
+    version = {value = '1.0'},
+    gui = {
+        {tab = 'loot', 'General'},
+    },
+    positionAtMouse = {value = false, metadata = {element = 'checkbox', category = 'General', indexInCategory = 1, description = 'Position loot frame at mouse cursor'}},
+    lootBgAlpha = {value = 1, metadata = {element = 'slider', category = 'General', indexInCategory = 2, description = 'Loot frame background transparency', min = 0, max = 1, stepSize = 0.1}},
+    lootScale = {value = 1, metadata = {element = 'slider', category = 'General', indexInCategory = 3, description = 'Loot frame scale', min = 0.5, max = 1.5, stepSize = 0.05}},
+})
+
+AU:NewModule('lootframe', 1, function()
+        -- Aurora Module System Flow:
+    -- ApplyDefaults() populates AU.profile[module][option] with default values from AU.defaults
+    -- ExecModules() loads modules by calling each enabled module's func() based on priority
+    -- Module's func() creates UI/features and calls NewCallbacks() as its last step
+    -- NewCallbacks() registers callbacks and immediately executes them with current AU_GlobalDB values to initialize module state
+    -- GUI changes trigger SetConfig() which updates AU_GlobalDB then re-executes the callback with new value
+
+
+    local regions = {LootFrame:GetRegions()}
+    for i = 1, table.getn(regions) do
+        local region = regions[i]
+        if region:GetObjectType() == 'Texture' and region ~= LootFramePortraitOverlay then
+            region:Hide()
+        end
+    end
+
+    LootCloseButton:Hide()
+
+    local customBg = AU.ui.CreatePaperDollFrame('AU_LootCustomBg', LootFrame, 256, 256, 1)
+    customBg:SetPoint('TOPLEFT', LootFrame, 'TOPLEFT', 10, 0)
+    customBg:SetPoint('BOTTOMRIGHT', LootFrame, 'BOTTOMRIGHT', -70, 0)
+    customBg:SetFrameLevel(LootFrame:GetFrameLevel() + 1)
+    AU.setups.lootBg = customBg.Bg
+
+    local closeButton = AU.ui.CreateRedButton(customBg, 'close', function() HideUIPanel(LootFrame) end)
+    closeButton:SetPoint('TOPRIGHT', customBg, 'TOPRIGHT', 0, -1)
+    closeButton:SetSize(20, 20)
+    closeButton:SetFrameLevel(customBg:GetFrameLevel() + 3)
+
+    local lootBg = customBg:CreateTexture(nil, 'BORDER')
+    lootBg:SetTexture('Interface\\Buttons\\WHITE8X8')
+    lootBg:SetPoint('TOPLEFT', customBg, 'TOPLEFT', 6, -50)
+    lootBg:SetPoint('BOTTOMRIGHT', customBg, 'BOTTOMRIGHT', -6, 6)
+    lootBg:SetVertexColor(0, 0, 0, .3)
+    local header = customBg:CreateFontString(nil, 'OVERLAY', 'GameFontNormal')
+    header:SetPoint('TOP', customBg, 'TOP', 5, -5)
+    header:SetText('Items')
+
+    LootFramePortraitOverlay:SetParent(customBg)
+    LootFramePortraitOverlay:SetDrawLayer('BORDER', 1)
+    LootFramePortraitOverlay:ClearAllPoints()
+    LootFramePortraitOverlay:SetPoint('TOPLEFT', customBg, 'TOPLEFT', -4, 6)
+
+    local topBg = CreateFrame('Frame', nil, customBg)
+    topBg:SetFrameLevel(customBg:GetFrameLevel()+1)
+    topBg:SetPoint('TOPLEFT', customBg, 'TOP', -32, -25)
+    topBg:SetPoint('RIGHT', customBg, 'RIGHT', -6, 0)
+    topBg:SetHeight(24)
+    topBg:SetBackdrop({
+        bgFile = 'Interface\\Buttons\\WHITE8X8',
+        insets = {left = 0, right = 0, top = 0, bottom = 0}
+    })
+    topBg:SetBackdropColor(0, 0, 0, 0.5)
+
+    tinsert(UISpecialFrames, 'AU_LootCustomBg')
+
+    AU.hooks.HookScript(LootFrame, 'OnShow', function()
+        LootFrame:ClearAllPoints()
+        if AU.profile.lootframe.positionAtMouse then
+            local x, y = GetCursorPosition()
+            local uiScale = UIParent:GetEffectiveScale()
+            local lootScale = LootFrame:GetScale()
+            LootFrame:SetPoint('TOPLEFT', UIParent, 'BOTTOMLEFT', x / uiScale / lootScale, y / uiScale / lootScale)
+        else
+            LootFrame:SetPoint('LEFT', UIParent, 'LEFT', 5, 33)
+        end
+    end)
+
+    local callbacks = {}
+    callbacks.positionAtMouse = function(value)
+        -- Callback executes when setting changes, no action needed here
+    end
+
+    callbacks.lootBgAlpha = function(value)
+        if AU.setups and AU.setups.lootBg then
+            AU.setups.lootBg:SetAlpha(value)
+        end
+    end
+
+    callbacks.lootScale = function(value)
+        if customBg then customBg:SetScale(value) end
+        if LootFrame then LootFrame:SetScale(value) end
+    end
+
+    AU:NewCallbacks('lootframe', callbacks)
+end)

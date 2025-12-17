@@ -21,6 +21,7 @@
     <Include file="cast\cast.lua"/>
 
     <!-- CHAT -->
+    <Include file="chat\chat-tools.lua"/>
     <Include file="chat\chat.lua"/>
 
     <!-- Fixes -->
@@ -47,11 +48,15 @@
 
     <!-- PANELS -->
     <Include file="panels\characterframe.lua"/>
+    <Include file="panels\classtrainerframe.lua"/>
     <Include file="panels\gamemenu.lua"/>
     <Include file="panels\gossipframe.lua"/>
     <Include file="panels\help.lua"/>
     <Include file="panels\keybindingframe.lua"/>
+    <Include file="panels\lootframe.lua"/>
     <Include file="panels\macroframe.lua"/>
+    <Include file="panels\merchantframe.lua"/>
+    <Include file="panels\questframe.lua"/>
     <Include file="panels\questlog.lua"/>
     <Include file="panels\socialframe.lua"/>
     <Include file="panels\spellbook.lua"/>

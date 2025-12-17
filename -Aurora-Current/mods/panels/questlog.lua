@@ -3,7 +3,6 @@ UNLOCKAURORA()
 AU:NewDefaults('questlog', {
     version = {value = '1.0'},
     enabled = {value = true},
-
 })
 
 AU:NewModule('questlog', 1, function()

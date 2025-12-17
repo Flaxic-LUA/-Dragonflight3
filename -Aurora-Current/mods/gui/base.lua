@@ -30,7 +30,7 @@ AU:NewModule('gui-base', 1, function()
             {name = 'Castbar', key = 'castbar'},
             -- {name = 'Chat', key = 'chat'},
             {name = 'Extras', key = 'extras'},
-            -- {name = 'Loot', key = 'loot'},
+            {name = 'Loot', key = 'loot'},
             {name = 'Minimap', key = 'minimap'},
             -- {name = 'Nameplates', key = 'nameplates'},
             -- {name = 'Quests', key = 'quests'},

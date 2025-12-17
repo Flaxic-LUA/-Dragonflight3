@@ -5,7 +5,7 @@ AU:NewDefaults('help', {
     enabled = {value = true},
 })
 
-AU:NewModule('help', 1, 'PLAYER_ENTERING_WORLD', function()
+AU:NewModule('help', 1, function()
     local regions = {HelpFrame:GetRegions()}
     for i = 1, table.getn(regions) do
         local region = regions[i]

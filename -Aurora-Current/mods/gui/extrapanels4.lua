@@ -3,15 +3,11 @@ UNLOCKAURORA()
 AU:NewDefaults('gui-extrapanels4', {
     enabled = {value = true},
     version = {value = '1.0'},
-    gui = {
-        {tab = 'gui-extrapanels4', subtab = 'mainbar', categories = 'General'},
-    },
 })
 
-AU:NewModule('gui-extrapanels4', 1, function()
+AU:NewModule('gui-extrapanels4', 2, function()
     local setup = AU.setups.guiBase
     if not setup then return end
-
 
     local devPanel = setup.panels['development']
     if not devPanel then return end

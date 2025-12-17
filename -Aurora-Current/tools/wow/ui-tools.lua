@@ -1149,7 +1149,7 @@ function AU.ui.CreatePaperDollFrame(name, parent, width, height, frameStyle)
     local metalHorizTex = frameStyle == 3 and "UIFrameMetalHorizontal2x2" or "UIFrameMetalHorizontal2x"
 
     local bgTexture = frame:CreateTexture(nil, "BACKGROUND")
-    -- bgTexture:SetDrawLayer("BACKGROUND", -1)
+    bgTexture:SetDrawLayer("BACKGROUND", -2)
     bgTexture:SetTexture('Interface\\AddOns\\-Aurora-BIOS\\media\\tex\\interface\\UI-Background-Rock')
     bgTexture:SetPoint("TOPLEFT", frame, "TOPLEFT", 2, -21)
     bgTexture:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)

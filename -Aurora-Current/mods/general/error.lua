@@ -4,7 +4,7 @@ AU:NewDefaults('error', {
     enabled = {value = true},
     version = {value = '1.0'},
     gui = {
-        {tab = 'extras', subtab = 'error', categories = 'General'},
+        {tab = 'general', subtab = 'error', categories = 'General'},
     },
 
     errorprint = {value = true, metadata = {element = 'checkbox', category = 'General', indexInCategory = 1, description = 'Print errors to the chat frame'}},

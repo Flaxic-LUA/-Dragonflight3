@@ -25,7 +25,7 @@ AU:NewDefaults('UIParent', {
     questlogScale = {value = 1, metadata = {element = 'slider', category = 'UI Scale', indexInCategory = 2, description = 'Quest log scale', min = 0.5, max = 1.5, stepSize = 0.05}},
     socialScale = {value = 1, metadata = {element = 'slider', category = 'UI Scale', indexInCategory = 3, description = 'Social frame scale', min = 0.5, max = 1.5, stepSize = 0.05}},
     helpScale = {value = 1, metadata = {element = 'slider', category = 'UI Scale', indexInCategory = 4, description = 'Help frame scale', min = 0.5, max = 1.5, stepSize = 0.05}},
-    gamemenuScale = {value = 0.9, metadata = {element = 'slider', category = 'UI Scale', indexInCategory = 5, description = 'Game menu scale', min = 0.5, max = 1.5, stepSize = 0.05}},
+    gamemenuScale = {value = 0.8, metadata = {element = 'slider', category = 'UI Scale', indexInCategory = 5, description = 'Game menu scale', min = 0.5, max = 1.5, stepSize = 0.05}},
     spellbookScale = {value = 0.9, metadata = {element = 'slider', category = 'UI Scale', indexInCategory = 6, description = 'Spellbook scale', min = 0.5, max = 1.5, stepSize = 0.05}},
     talentsScale = {value = 0.9, metadata = {element = 'slider', category = 'UI Scale', indexInCategory = 7, description = 'Talents scale', min = 0.5, max = 1.5, stepSize = 0.05}},
     keybindingScale = {value = 1, metadata = {element = 'slider', category = 'UI Scale', indexInCategory = 8, description = 'Keybinding frame scale', min = 0.5, max = 1.5, stepSize = 0.05}},

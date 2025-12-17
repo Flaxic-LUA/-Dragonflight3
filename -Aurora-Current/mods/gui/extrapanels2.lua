@@ -3,9 +3,6 @@ UNLOCKAURORA()
 AU:NewDefaults('gui-extrapanels2', {
     version = {value = '1.0'},
     enabled = {value = true},
-    gui = {
-        {indexRange = {1, 1}, tab = 'gui-extrapanels2', subtab = 1},
-    },
 })
 
 AU:NewModule('gui-extrapanels2', 2, function()

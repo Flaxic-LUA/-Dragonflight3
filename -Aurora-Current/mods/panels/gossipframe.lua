@@ -1,16 +1,8 @@
 UNLOCKAURORA()
 
--- Defaults gui structure: {tab = 'tabname', subtab = 'subtabname', 'category1', 'category2', ...}
--- Named keys (tab, subtab) define panel location, array elements define categories within that panel
--- Each category groups related settings with a header, settings use category + indexInCategory for ordering
-
 AU:NewDefaults('gossipframe', {
     enabled = {value = true},
     version = {value = '1.0'},
-    gui = {
-        {tab = 'gossipframe', subtab = 'mainbar', categories = 'General'},
-    },
-
 })
 
 AU:NewModule('gossipframe', 1, function()
@@ -41,7 +33,7 @@ AU:NewModule('gossipframe', 1, function()
     customBg:SetPoint('BOTTOMRIGHT', GossipFrame, 'BOTTOMRIGHT', -32, 70)
     customBg:SetFrameLevel(GossipFrame:GetFrameLevel() - 1)
 
-    local topWood = customBg:CreateTexture(nil, 'BORDER')
+    local topWood = customBg:CreateTexture(nil, 'BACKGROUND')
     topWood:SetTexture(media['tex:panels:spellbook_top_wood.blp'])
     topWood:SetPoint('TOPLEFT', customBg, 'TOPLEFT', 0, -10)
     topWood:SetPoint('RIGHT', customBg, 'RIGHT', 0, -60)
@@ -50,7 +42,7 @@ AU:NewModule('gossipframe', 1, function()
     GossipFramePortrait:SetParent(customBg)
     GossipFramePortrait:SetDrawLayer('BORDER', 0)
     GossipFramePortrait:ClearAllPoints()
-    GossipFramePortrait:SetPoint('TOPLEFT', customBg, 'TOPLEFT', -3, 7)
+    GossipFramePortrait:SetPoint('TOPLEFT', customBg, 'TOPLEFT', -4, 7)
 
     local rightBg = customBg:CreateTexture(nil, 'ARTWORK')
     rightBg:SetTexture(media['tex:panels:questlog_right_bg.blp'])
@@ -59,7 +51,6 @@ AU:NewModule('gossipframe', 1, function()
 
     local bookmark = customBg:CreateTexture(nil, 'OVERLAY')
     bookmark:SetTexture(media['tex:panels:spellbook_bookmark.blp'])
-    -- bookmark:SetPoint('TOPLEFT', customBg, 'TOPLEFT', -4, -65)
     bookmark:SetSize(40, 300)
 
     local closeButton = AU.ui.CreateRedButton(customBg, 'close', function() HideUIPanel(GossipFrame) end)

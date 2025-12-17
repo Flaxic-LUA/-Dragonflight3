@@ -11,7 +11,6 @@ AU.others.blacklistFound = false
 
 AU.others.dbversion = 3
 
--- private
 function init:DetectServer()
     local buildInfo = GetBuildInfo()
     local realmName = GetRealmName()
@@ -99,8 +98,9 @@ function init:CheckDBVersion()
                 bar:SetValue(0, true)
                 bar.text = AU.ui.Font(bar, 12, 'Resetting database...', {1, 1, 1}, 'CENTER')
                 bar.text:SetPoint('CENTER', bar, 'CENTER', 0, 0)
-                
+
                 bar:SetScript('OnUpdate', function()
+                    bar:SetScript('OnUpdate', nil)
                     _G.AU_GlobalDB = {}
                     _G.AU_GlobalDB.meta = {}
                     _G.AU_GlobalDB.meta.dbversion = AU.others.dbversion
@@ -200,6 +200,7 @@ function init:ExecModules(forceImmediate)
                 entry.module.func()
                 init.loadingBar:SetValue(init.loadingIndex, true)
             else
+                init.loadingBar:SetScript('OnUpdate', nil)
                 init.loadingBar:Hide()
                 init.loadingBar = nil
                 init:Finalize()
