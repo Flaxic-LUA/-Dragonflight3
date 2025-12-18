@@ -23,6 +23,7 @@
     <!-- CHAT -->
     <Include file="chat\chat-tools.lua"/>
     <Include file="chat\chat.lua"/>
+    <Include file="chat\intellisense.lua"/>
 
     <!-- Fixes -->
     <Include file="fixes\tempfixes.lua"/>

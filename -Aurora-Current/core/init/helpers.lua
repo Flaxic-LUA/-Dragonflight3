@@ -16,6 +16,7 @@ _G.SlashCmdList['AURORA'] = function(msg)
             'Yes',
             function()
                 _G.AU_GlobalDB = {}
+                _G.AU_LearnedData = {}
                 ReloadUI()
             end,
             'No'

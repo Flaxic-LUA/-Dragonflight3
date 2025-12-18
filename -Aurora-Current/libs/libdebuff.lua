@@ -1,7 +1,6 @@
 UNLOCKAURORA()
 
 -- credit to shagu v1.0
-if AU.lib.libdebuff then return end
 
 local libdebuff = CreateFrame('Frame', 'AUDebuffScanner', UIParent)
 local scanner = AU.lib.libtipscan:GetScanner('libdebuff')

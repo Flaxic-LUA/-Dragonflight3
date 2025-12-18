@@ -198,10 +198,6 @@ AU:NewModule('chat', 1, function()
         ToggleDropDownMenu(1, nil, ChatFrame1TabDropDown, 'AuroraChatMenuButton', 0, 0)
     end)
 
-    -- editbox call
-    -- AU.setups.chat:CreateChatInput()
-    -- AU.setups.chat:SetupHooks()
-
     -- callbacks
     local callbacks = {}
 

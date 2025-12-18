@@ -24,7 +24,7 @@ end)
 --     end
 -- end)
 
--- PlayerModel Availability Check
+-- playermodel availability check
 local testModel = CreateFrame('PlayerModel')
 local modelReady = false
 
@@ -39,7 +39,7 @@ testModel:SetScript('OnUpdate', function()
     end
 end)
 
--- Pet Name Availability Check
+-- pet name availability check
 local petNameReady = false
 local petChecker = CreateFrame('Frame')
 

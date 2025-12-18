@@ -4,7 +4,7 @@
 ## Author: Guzruul
 ## DefaultState: enabled
 ## Dependencies: -Aurora-BIOS
-## SavedVariables: AU_GlobalDB
+## SavedVariables: AU_GlobalDB, AU_LearnedData
 ## SavedVariablesPerCharacter:
 
 init.xml

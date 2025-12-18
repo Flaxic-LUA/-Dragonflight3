@@ -1,7 +1,6 @@
 UNLOCKAURORA()
 
 -- credit to shagu v1.0
-if AU.lib.libtipscan then return end
 
 local scanner = {}
 local libtipscan = {}

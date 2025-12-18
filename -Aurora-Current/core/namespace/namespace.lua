@@ -5,6 +5,7 @@ AU = CreateFrame'Frame'
 
 -- saved variables
 _G.AU_GlobalDB = {}
+_G.AU_LearnedData = {}
 
 -- core
 AU.tables = {}

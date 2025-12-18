@@ -2,6 +2,8 @@
 
 A comprehensive UI overhaul for World of Warcraft Vanilla 1.12.1.
 
+**⚠️ Requires [SuperWoW 1.5+](https://github.com/balakethelock/SuperWoW)**
+
 ## Features
 
 - 900+ customizable options
@@ -38,6 +40,7 @@ A comprehensive UI overhaul for World of Warcraft Vanilla 1.12.1.
 
 ## Requirements
 
+- **[SuperWoW 1.5+](https://github.com/balakethelock/SuperWoW)** (Required)
 - World of Warcraft 1.12.1
 - Both addon folders must be installed together
 

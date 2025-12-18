@@ -526,9 +526,9 @@ function setup:UpdateButtonKeybind(button)
             elseif id >= 49 and id <= 60 then
                 key = GetBindingKey('MULTIACTIONBAR2BUTTON'..(id - 48))
             elseif id >= 25 and id <= 36 then
-                key = GetBindingKey('MULTIACTIONBAR3BUTTON'..(id - 24))
+                key = GetBindingKey('MULTIACTIONBAR4BUTTON'..(id - 24))
             elseif id >= 37 and id <= 48 then
-                key = GetBindingKey('MULTIACTIONBAR4BUTTON'..(id - 36))
+                key = GetBindingKey('MULTIACTIONBAR3BUTTON'..(id - 36))
             elseif id >= 200 and id <= 209 then
                 key = GetBindingKey('SHAPESHIFTBUTTON'..(id - 199))
             end

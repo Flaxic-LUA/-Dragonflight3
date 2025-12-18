@@ -104,6 +104,12 @@ function print(msg)
     DEFAULT_CHAT_FRAME:AddMessage(ENV.info.addonNameColor .. ': ' .. tostring(msg))
 end
 
+if not SUPERWOW_VERSION then
+    DisableAddOn('-Aurora-Current')
+    print('|cFFFF0000Aurora requires SuperWoW.|r Aurora-Current has been disabled.')
+    return
+end
+
 function UNLOCKAURORA()
     if IsAddOnLoaded(ENV.info.AddonCurrent) and IsAddOnLoaded(ENV.info.AddonLTS) then
         print(ENV.info.addonBIOS .. ': Both Current and LTS loaded, aborting')

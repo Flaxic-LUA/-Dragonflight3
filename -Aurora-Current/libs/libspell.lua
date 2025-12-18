@@ -1,7 +1,6 @@
 UNLOCKAURORA()
 
 -- credit to shagu v1.0
-if AU.lib.libspell then return end
 
 local scanner = AU.lib.libtipscan:GetScanner('libspell')
 local libspell = {}
