@@ -360,26 +360,23 @@ function setup:UpdatePortraitVisibility(portraitFrame)
         if not portraitFrame:IsShown() then
             portraitFrame:Show()
         end
-        if portraitFrame.unit ~= 'targettarget' and portraitFrame.unit ~= 'pettarget' then
-            local showPortraitKey = string.find(portraitFrame.unit, 'party') and 'partyShowPortrait' or portraitFrame.unit..'ShowPortrait'
-            if AU_GlobalDB and AU.profile['unitframes'] and not AU.profile['unitframes'][showPortraitKey] then
-                portraitFrame.model:Hide()
-                portraitFrame.portrait2D:Hide()
-                portraitFrame.classIcon:Hide()
-            elseif string.find(portraitFrame.unit, 'party') and (not UnitIsVisible(portraitFrame.unit) or not UnitIsConnected(portraitFrame.unit)) then
-                portraitFrame.model:Hide()
-                portraitFrame.classIcon:Hide()
-                SetPortraitTexture(portraitFrame.portrait2D, portraitFrame.unit)
-                portraitFrame.portrait2D:Show()
-            elseif portraitFrame.unit == 'target' and UnitInParty('target') and not UnitIsVisible('target') then
-                portraitFrame.model:Hide()
-                portraitFrame.classIcon:Hide()
-                SetPortraitTexture(portraitFrame.portrait2D, portraitFrame.unit)
-                portraitFrame.portrait2D:Show()
-            else
-                portraitFrame.portrait2D:Hide()
-                setup:UpdateUnitPortrait(portraitFrame, portraitFrame.unit)
-            end
+        local showPortraitKey = string.find(portraitFrame.unit, 'party') and 'partyShowPortrait' or portraitFrame.unit..'ShowPortrait'
+        if AU_GlobalDB and AU.profile['unitframes'] and not AU.profile['unitframes'][showPortraitKey] then
+            portraitFrame.model:Hide()
+            portraitFrame.portrait2D:Hide()
+            portraitFrame.classIcon:Hide()
+        elseif string.find(portraitFrame.unit, 'party') and (not UnitIsVisible(portraitFrame.unit) or not UnitIsConnected(portraitFrame.unit)) then
+            portraitFrame.model:Hide()
+            portraitFrame.classIcon:Hide()
+            SetPortraitTexture(portraitFrame.portrait2D, portraitFrame.unit)
+            portraitFrame.portrait2D:Show()
+        elseif portraitFrame.unit == 'target' and UnitInParty('target') and not UnitIsVisible('target') then
+            portraitFrame.model:Hide()
+            portraitFrame.classIcon:Hide()
+            SetPortraitTexture(portraitFrame.portrait2D, portraitFrame.unit)
+            portraitFrame.portrait2D:Show()
+        else
+            setup:UpdateUnitPortrait(portraitFrame, portraitFrame.unit)
         end
     else
         portraitFrame:Hide()
@@ -1045,27 +1042,33 @@ function setup:OnUpdate()
                             if UnitExists(portrait.unit) then
                                 portrait.hpBar.max = UnitHealthMax(portrait.unit)
                                 portrait.powerBar.max = UnitManaMax(portrait.unit) > 0 and UnitManaMax(portrait.unit) or 1
+                                portrait.model.lastUnit = nil
                             end
                         elseif name ~= portrait.namebuf2 then
                             portrait.namebuf2 = name
                         else
-                            setup:UpdatePortraitVisibility(portrait)
-                            if UnitExists(portrait.unit) and UnitIsConnected(portrait.unit) then
-                                local isNewTarget = portrait.model.lastUnit ~= name
-                                if isNewTarget then
-                                    portrait.model.update = portrait.unit
-                                    portrait.model.lastUnit = name
+                            if UnitExists(portrait.unit) then
+                                if not portrait:IsShown() then portrait:Show() end
+                                if UnitIsConnected(portrait.unit) then
+                                    local isNewTarget = portrait.model.lastUnit ~= name
+                                    if isNewTarget then
+                                        portrait.model.update = portrait.unit
+                                        portrait.model.lastUnit = name
+                                    end
+                                    setup:UpdatePortraitMode(portrait, portrait.unit)
+                                    setup:UpdateUnitHealth(portrait, isNewTarget)
+                                    setup:UpdateUnitMana(portrait, isNewTarget)
+                                    setup:UpdateHealthBarColor(portrait, portrait.unit)
+                                    setup:UpdateNameText(portrait)
+                                    setup:UpdateLevelColor(portrait)
+                                    setup:UpdatePvPIcon(portrait)
+                                    setup:UpdateBarText(portrait)
+                                    setup:UpdateBarTextNumbers(portrait)
+                                    local visibleBuffs = setup:UpdateBuffs(portrait)
+                                    setup:UpdateDebuffs(portrait, math.ceil(visibleBuffs / 5))
                                 end
-                                setup:UpdateUnitHealth(portrait, isNewTarget)
-                                setup:UpdateUnitMana(portrait, isNewTarget)
-                                setup:UpdateHealthBarColor(portrait, portrait.unit)
-                                setup:UpdateNameText(portrait)
-                                setup:UpdateLevelColor(portrait)
-                                setup:UpdatePvPIcon(portrait)
-                                setup:UpdateBarText(portrait)
-                                setup:UpdateBarTextNumbers(portrait)
-                                local visibleBuffs = setup:UpdateBuffs(portrait)
-                                setup:UpdateDebuffs(portrait, math.ceil(visibleBuffs / 5))
+                            else
+                                portrait:Hide()
                             end
                         end
                     end
