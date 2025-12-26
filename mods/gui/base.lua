@@ -27,7 +27,7 @@ DF:NewModule('gui-base', 1, function()
             {name = 'Actionbars', key = 'actionbars'},
             {name = 'Bags', key = 'bags'},
             {name = 'Buffs/Debuffs', key = 'buffs'},
-            {name = 'Castbar', key = 'castbar'},
+            {name = 'Castbar', key = 'castbar', dependency = 'SuperWoW'},
             -- {name = 'Chat', key = 'chat'},
             {name = 'Extras', key = 'extras'},
             {name = 'Loot', key = 'loot'},
@@ -39,6 +39,16 @@ DF:NewModule('gui-base', 1, function()
             {name = 'XP/RepBar', key = 'xpbar'},
         },
     }
+
+    do
+        local filtered = {}
+        for _, tab in pairs(setup.tabConfig) do
+            if not tab.dependency or dependencies[tab.dependency] then
+                table.insert(filtered, tab)
+            end
+        end
+        setup.tabConfig = filtered
+    end
 
     setup.mainframe = DF.ui.CreatePaperDollFrame('DF_GUI', UIParent, setup.basic.width, setup.basic.height, 2)
     setup.mainframe:SetPoint('CENTER', UIParent, 'CENTER', 0, 0)

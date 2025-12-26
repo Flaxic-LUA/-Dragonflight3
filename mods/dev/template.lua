@@ -7,7 +7,7 @@ DF:NewDefaults('template', {
     enabled = {value = true},
     version = {value = '1.0'},
     gui = {
-        {tab = 'template', subtab = 'mainbar', categories = 'General'},
+        {tab = 'template', subtab = 'mainbar', 'General'},
     },
 
     templateprint = {value = true, metadata = {element = 'checkbox', category = 'General', indexInCategory = 1, description = 'template print description'}},

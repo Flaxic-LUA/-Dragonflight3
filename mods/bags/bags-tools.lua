@@ -1,4 +1,3 @@
----@diagnostic disable: duplicate-set-field
 UNLOCKDRAGONFLIGHT()
 
 local setup = {

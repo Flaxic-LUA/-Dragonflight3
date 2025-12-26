@@ -217,9 +217,9 @@ DF:NewModule('gui-generator', 3, function()
                                             local widgetDesc = widgets[depInfo.mod .. '.' .. depInfo.key .. '.desc']
                                             if widget then
                                                 local shouldEnable = false
-                                                if depInfo.state then
+                                                if depInfo.state ~= nil then
                                                     shouldEnable = (newValue == depInfo.state)
-                                                elseif depInfo.stateNot then
+                                                elseif depInfo.stateNot ~= nil then
                                                     shouldEnable = (newValue ~= depInfo.stateNot)
                                                 end
                                                 if shouldEnable then
@@ -345,9 +345,9 @@ DF:NewModule('gui-generator', 3, function()
                                                 local widgetDesc = widgets[depInfo.mod .. '.' .. depInfo.key .. '.desc']
                                                 if widget then
                                                     local shouldEnable = false
-                                                    if depInfo.state then
+                                                    if depInfo.state ~= nil then
                                                         shouldEnable = (option == depInfo.state)
-                                                    elseif depInfo.stateNot then
+                                                    elseif depInfo.stateNot ~= nil then
                                                         shouldEnable = (option ~= depInfo.stateNot)
                                                     end
                                                     if shouldEnable then

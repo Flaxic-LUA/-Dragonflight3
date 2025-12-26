@@ -4,7 +4,7 @@ DF:NewDefaults('dock', {
     enabled = {value = true},
     version = {value = '1.0'},
     gui = {
-        {tab = 'extras', subtab = 'aurora dock', 'General', 'Appearance', 'Combat Glow', 'Resting Glow', 'Widgets'},
+        {tab = 'extras', subtab = 'dock', 'General', 'Appearance', 'Combat Glow', 'Resting Glow', 'Widgets'},
     },
 
     scale = {value = 1.0, metadata = {element = 'slider', category = 'General', indexInCategory = 1, description = 'Dock Scale', min = 0.5, max = 2.0, step = 0.1}},

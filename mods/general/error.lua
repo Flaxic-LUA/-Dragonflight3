@@ -1,4 +1,5 @@
 UNLOCKDRAGONFLIGHT()
+if IsAddOnLoaded'--Debugger' then redprint'ERROR LUA EXITED EARLY' return end
 
 DF:NewDefaults('error', {
     enabled = {value = true},

@@ -32,11 +32,11 @@
     <Include file="general\addons.lua"/>
     <Include file="general\combopoints.lua"/>
     <Include file="general\cooldowns.lua"/>
+    <Include file="general\distance.lua"/>
     <Include file="general\dock.lua"/>
     <Include file="general\editmode.lua"/>
     <Include file="general\error.lua"/>
     <Include file="general\firstrun.lua"/>
-    <Include file="general\tooltip.lua"/>
     <Include file="general\uiparent.lua"/>
 
     <!-- MICROMENU -->
@@ -47,6 +47,10 @@
     <Include file="minimap\minimap-tools.lua"/>
     <Include file="minimap\minimap.lua"/>
     <Include file="minimap\collector.lua"/>
+
+    <!-- NAMEPLATES -->
+    <Include file="nameplates\nameplates-tools.lua"/>
+    <Include file="nameplates\nameplates.lua"/>
 
     <!-- PANELS -->
     <Include file="panels\bank.lua"/>
@@ -69,6 +73,9 @@
     <Include file="panels\spellbook.lua"/>
     <Include file="panels\talents.lua"/>
     <Include file="panels\trade.lua"/>
+
+    <!-- TOOLTIP -->
+    <Include file="tooltip\tooltip.lua"/>
 
     <!-- UNITFRAMES -->
     <Include file="unitframes\unitframes-tools.lua"/>

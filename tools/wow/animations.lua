@@ -152,7 +152,7 @@ function DF.animations.CreateStatusBar(parent, width, height, animConfig, name)
     bar.val = 0
     bar.val_ = 0
     bar.max = 1
-    bar.baseColor = {1, 0.9, 0.2, 1}
+    bar.baseColor = {1, 1, 1, 1}
     bar.pulseColor = {1, 1, 1, 1}
     bar.cutoutColor = {1, 0.2, 0.2, 1}
     -- bar.bgColor = {0.2, 0.2, 0.2, .1}

@@ -1,5 +1,21 @@
 UNLOCKDRAGONFLIGHT()
 
+DF.tables['distancecolors_melee'] = {
+  {min = 0, max = 5, color = {0, 1, 0}}, -- green
+  {min = 5, max = 10, color = {1, 1, 0}}, -- yellow
+  {min = 10, max = 20, color = {1, 0.5, 0}}, -- orange
+  {min = 20, max = 30, color = {1, 0, 0}}, -- red
+  {min = 30, max = 999, color = {0.5, 0.5, 0.5}}, -- gray
+}
+
+DF.tables['distancecolors_ranged'] = {
+  {min = 0, max = 5, color = {1, 0, 0}}, -- red
+  {min = 5, max = 10, color = {1, 0.5, 0}}, -- orange
+  {min = 10, max = 20, color = {1, 1, 0}}, -- yellow
+  {min = 20, max = 30, color = {0, 1, 0}}, -- green
+  {min = 30, max = 999, color = {0.5, 0.5, 0.5}}, -- gray
+}
+
 DF.tables["classcolors"] = {
   ["WARRIOR"] = {0.78, 0.61, 0.43},
   ["MAGE"] = {0.41, 0.8, 0.94},

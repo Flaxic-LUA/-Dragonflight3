@@ -1,5 +1,4 @@
 local startTime = GetTime()
-
 local _, _, addonName = string.find(debugstack(), 'AddOns\\([^\\]+)\\')
 
 local texPaths = {
@@ -17,6 +16,7 @@ local texPaths = {
 local ENV = setmetatable({
         performance = {startTime = startTime},
         errors = {},
+        dependencies = {},
         info = {
             addonName = addonName,
             addonNameColor = '|cffffffffDragonflight|r |cffff00003|r',
@@ -94,13 +94,30 @@ function ENV.print(msg)
     DEFAULT_CHAT_FRAME:AddMessage(ENV.info.addonNameColor .. ': ' .. tostring(msg))
 end
 
+function ENV.RequireDependency(depName)
+    if not ENV.dependencies[depName] then
+        ENV.dependencies.skippedModules = ENV.dependencies.skippedModules + 1
+        return false
+    end
+    return true
+end
+
 function UNLOCKDRAGONFLIGHT()
     ENV:GetEnv()
 end
 
-if not SUPERWOW_VERSION then
-    ENV.redprint('SuperWoW missing. Some features wont work.')
-    return
+do
+    ENV.dependencies.SuperWoW = SUPERWOW_VERSION and true or false
+    ENV.dependencies.UnitXP = pcall(UnitXP, 'nop', 'nop')
+    ENV.dependencies.skippedModules = 0
+
+    local missing = {}
+    if not ENV.dependencies.SuperWoW then table.insert(missing, 'SuperWoW') end
+    if not ENV.dependencies.UnitXP then table.insert(missing, 'UnitXP SP3') end
+    if table.getn(missing) > 0 then
+        ENV.redprint('Missing: ' .. table.concat(missing, ' / '))
+        ENV.redprint('Some modules are disabled.')
+    end
 end
 
 local lastMem

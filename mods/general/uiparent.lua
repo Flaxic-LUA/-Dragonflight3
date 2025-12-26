@@ -1,9 +1,5 @@
 UNLOCKDRAGONFLIGHT()
 
--- Defaults gui structure: {tab = 'tabname', subtab = 'subtabname', 'category1', 'category2', ...}
--- Named keys (tab, subtab) define panel location, array elements define categories within that panel
--- Each category groups related settings with a header, settings use category + indexInCategory for ordering
-
 DF:NewDefaults('UIParent', {
     enabled = {value = true},
     version = {value = '1.0'},

@@ -279,15 +279,6 @@ DF:NewModule('tooltip', 1, 'PLAYER_ENTERING_WORLD', function()
         end
     end
 
-    function tooltip:Init()
-        self:HookActionBars()
-        self:HookUnitFrames()
-        self:HookBags()
-        self:HookMicroMenu()
-        self:HookBuffs()
-        self:HookMinimap()
-    end
-
     tooltip:HookActionBars()
     tooltip:HookUnitFrames()
     tooltip:HookMicroMenu()
@@ -307,25 +298,24 @@ DF:NewModule('tooltip', 1, 'PLAYER_ENTERING_WORLD', function()
     local origSetDefaultAnchor = _G.GameTooltip_SetDefaultAnchor
     local origUnitFrameOnLeave = _G.UnitFrame_OnLeave
 
-    -- callbacks
+    local cursorFrame = CreateFrame('Frame', nil, UIParent)
+    cursorFrame:SetSize(1, 1)
+
     local callbacks = {}
     local callbackHelper = {definesomethinginheredirectly}
     local offsetX, offsetY
 
     callbacks.tooltipMouseAnchor = function(value)
         if value then
+            cursorFrame:SetScript('OnUpdate', function()
+                local scale = UIParent:GetScale()
+                local x, y = GetCursorPosition()
+                this:ClearAllPoints()
+                this:SetPoint('CENTER', UIParent, 'BOTTOMLEFT', x/scale, y/scale)
+            end)
             _G.GameTooltip_SetDefaultAnchor = function(frame, parent)
                 frame:SetOwner(parent, 'ANCHOR_CURSOR')
-                if not frame.cursor then
-                    frame.cursor = CreateFrame('Frame', nil, UIParent)
-                    frame.cursor:SetSize(1, 1)
-                    frame.cursor:SetScript('OnUpdate', function()
-                        local scale = UIParent:GetScale()
-                        local x, y = GetCursorPosition()
-                        this:SetPoint('CENTER', UIParent, 'BOTTOMLEFT', x/scale, y/scale)
-                    end)
-                end
-                frame:SetPoint('BOTTOMLEFT', frame.cursor, 'CENTER', offsetX or 0, offsetY or 0)
+                frame:SetPoint('BOTTOMLEFT', cursorFrame, 'CENTER', offsetX or 0, offsetY or 0)
             end
             _G.UnitFrame_OnLeave = function()
                 if SpellIsTargeting() then
@@ -335,6 +325,7 @@ DF:NewModule('tooltip', 1, 'PLAYER_ENTERING_WORLD', function()
                 GameTooltip:Hide()
             end
         else
+            cursorFrame:SetScript('OnUpdate', nil)
             _G.GameTooltip_SetDefaultAnchor = origSetDefaultAnchor
             _G.UnitFrame_OnLeave = origUnitFrameOnLeave
         end
@@ -342,16 +333,10 @@ DF:NewModule('tooltip', 1, 'PLAYER_ENTERING_WORLD', function()
 
     callbacks.tooltipOffsetX = function(value)
         offsetX = value
-        if DF.profile.tooltip.tooltipMouseAnchor then
-            callbacks.tooltipMouseAnchor(true)
-        end
     end
 
     callbacks.tooltipOffsetY = function(value)
         offsetY = value
-        if DF.profile.tooltip.tooltipMouseAnchor then
-            callbacks.tooltipMouseAnchor(true)
-        end
     end
 
     callbacks.tooltipHideHealthBar = function(value)
@@ -360,7 +345,6 @@ DF:NewModule('tooltip', 1, 'PLAYER_ENTERING_WORLD', function()
             GameTooltipStatusBar:SetScript('OnShow', function() this:Hide() end)
         else
             GameTooltipStatusBar:SetScript('OnShow', nil)
-            GameTooltipStatusBar:Show()
         end
     end
 

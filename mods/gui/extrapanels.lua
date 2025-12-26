@@ -148,10 +148,6 @@ DF:NewModule('gui-extrapanels', 2, function()
         end
     end
 
-    local optionsHeader = DF.ui.Font(statsFrame, 10, 'Dragonflight Options:', {0.6, 0.6, 0.6})
-    optionsHeader:SetPoint('TOPLEFT', statsFrame, 'TOPLEFT', 10, -35)
-    optionsHeader:SetJustifyH('LEFT')
-
     local optionsCount = 0
     for module, defaults in pairs(DF.defaults) do
         for option, _ in pairs(defaults) do
@@ -161,52 +157,52 @@ DF:NewModule('gui-extrapanels', 2, function()
         end
     end
 
-    local totalAmountLabel = DF.ui.Font(statsFrame, 10, 'Total amount:')
-    totalAmountLabel:SetPoint('TOPLEFT', optionsHeader, 'BOTTOMLEFT', 0, -5)
-    totalAmountLabel:SetJustifyH('LEFT')
-    local totalAmountValue = DF.ui.Font(statsFrame, 10, '|cffffffff' .. optionsCount .. '|r')
-    totalAmountValue:SetPoint('TOP', totalAmountLabel, 'TOP', 0, 0)
-    totalAmountValue:SetPoint('RIGHT', statsFrame, 'RIGHT', -10, 0)
-    totalAmountValue:SetJustifyH('RIGHT')
-
-    local disabledOptionsLabel = DF.ui.Font(statsFrame, 10, 'Currently disabled:')
-    disabledOptionsLabel:SetPoint('TOPLEFT', totalAmountLabel, 'BOTTOMLEFT', 0, -3)
-    disabledOptionsLabel:SetJustifyH('LEFT')
-    local disabledOptionsValue = DF.ui.Font(statsFrame, 10, 'N/A')
-    disabledOptionsValue:SetPoint('TOP', disabledOptionsLabel, 'TOP', 0, 0)
-    disabledOptionsValue:SetPoint('RIGHT', statsFrame, 'RIGHT', -10, 0)
-    disabledOptionsValue:SetJustifyH('RIGHT')
-
     local modulesHeader = DF.ui.Font(statsFrame, 10, 'Dragonflight Modules:', {0.6, 0.6, 0.6})
-    modulesHeader:SetPoint('TOPLEFT', disabledOptionsLabel, 'BOTTOMLEFT', 0, -10)
+    modulesHeader:SetPoint('TOPLEFT', statsFrame, 'TOPLEFT', 10, -35)
     modulesHeader:SetJustifyH('LEFT')
 
-    local totalLabel = DF.ui.Font(statsFrame, 10, 'Total:')
-    totalLabel:SetPoint('TOPLEFT', modulesHeader, 'BOTTOMLEFT', 0, -5)
-    totalLabel:SetJustifyH('LEFT')
-    local totalValue = DF.ui.Font(statsFrame, 10, '|cffffffff' .. totalModules .. '|r')
-    totalValue:SetPoint('TOP', totalLabel, 'TOP', 0, 0)
-    totalValue:SetPoint('RIGHT', statsFrame, 'RIGHT', -10, 0)
-    totalValue:SetJustifyH('RIGHT')
+    local totalModulesLabel = DF.ui.Font(statsFrame, 10, 'Total modules:')
+    totalModulesLabel:SetPoint('TOPLEFT', modulesHeader, 'BOTTOMLEFT', 0, -5)
+    totalModulesLabel:SetJustifyH('LEFT')
+    local totalModulesValue = DF.ui.Font(statsFrame, 10, '|cffffffff' .. totalModules .. '|r')
+    totalModulesValue:SetPoint('TOP', totalModulesLabel, 'TOP', 0, 0)
+    totalModulesValue:SetPoint('RIGHT', statsFrame, 'RIGHT', -10, 0)
+    totalModulesValue:SetJustifyH('RIGHT')
+
+    local totalOptionsLabel = DF.ui.Font(statsFrame, 10, 'Total options:')
+    totalOptionsLabel:SetPoint('TOPLEFT', totalModulesLabel, 'BOTTOMLEFT', 0, -3)
+    totalOptionsLabel:SetJustifyH('LEFT')
+    local totalOptionsValue = DF.ui.Font(statsFrame, 10, '|cffffffff' .. optionsCount .. '|r')
+    totalOptionsValue:SetPoint('TOP', totalOptionsLabel, 'TOP', 0, 0)
+    totalOptionsValue:SetPoint('RIGHT', statsFrame, 'RIGHT', -10, 0)
+    totalOptionsValue:SetJustifyH('RIGHT')
 
     local enabledLabel = DF.ui.Font(statsFrame, 10, 'Enabled:')
-    enabledLabel:SetPoint('TOPLEFT', totalLabel, 'BOTTOMLEFT', 0, -3)
+    enabledLabel:SetPoint('TOPLEFT', totalOptionsLabel, 'BOTTOMLEFT', 0, -10)
     enabledLabel:SetJustifyH('LEFT')
     local enabledValue = DF.ui.Font(statsFrame, 10, '|cff80ff80' .. enabledModules .. '|r')
     enabledValue:SetPoint('TOP', enabledLabel, 'TOP', 0, 0)
     enabledValue:SetPoint('RIGHT', statsFrame, 'RIGHT', -10, 0)
     enabledValue:SetJustifyH('RIGHT')
 
-    local disabledLabel = DF.ui.Font(statsFrame, 10, 'Disabled:')
-    disabledLabel:SetPoint('TOPLEFT', enabledLabel, 'BOTTOMLEFT', 0, -3)
-    disabledLabel:SetJustifyH('LEFT')
-    local disabledValue = DF.ui.Font(statsFrame, 10, '|cffff8080' .. disabledModules .. '|r')
-    disabledValue:SetPoint('TOP', disabledLabel, 'TOP', 0, 0)
-    disabledValue:SetPoint('RIGHT', statsFrame, 'RIGHT', -10, 0)
-    disabledValue:SetJustifyH('RIGHT')
+    local disabledByUserLabel = DF.ui.Font(statsFrame, 10, 'Disabled by user:')
+    disabledByUserLabel:SetPoint('TOPLEFT', enabledLabel, 'BOTTOMLEFT', 0, -3)
+    disabledByUserLabel:SetJustifyH('LEFT')
+    local disabledByUserValue = DF.ui.Font(statsFrame, 10, '|cffff8080' .. disabledModules .. '|r')
+    disabledByUserValue:SetPoint('TOP', disabledByUserLabel, 'TOP', 0, 0)
+    disabledByUserValue:SetPoint('RIGHT', statsFrame, 'RIGHT', -10, 0)
+    disabledByUserValue:SetJustifyH('RIGHT')
+
+    local disabledBySystemLabel = DF.ui.Font(statsFrame, 10, 'Disabled by system:')
+    disabledBySystemLabel:SetPoint('TOPLEFT', disabledByUserLabel, 'BOTTOMLEFT', 0, -3)
+    disabledBySystemLabel:SetJustifyH('LEFT')
+    local disabledBySystemValue = DF.ui.Font(statsFrame, 10, '|cffff8080' .. dependencies.skippedModules .. '|r')
+    disabledBySystemValue:SetPoint('TOP', disabledBySystemLabel, 'TOP', 0, 0)
+    disabledBySystemValue:SetPoint('RIGHT', statsFrame, 'RIGHT', -10, 0)
+    disabledBySystemValue:SetJustifyH('RIGHT')
 
     local addonsHeader = DF.ui.Font(statsFrame, 10, 'WoW Addons:', {0.6, 0.6, 0.6})
-    addonsHeader:SetPoint('TOPLEFT', disabledLabel, 'BOTTOMLEFT', 0, -10)
+    addonsHeader:SetPoint('TOPLEFT', disabledBySystemLabel, 'BOTTOMLEFT', 0, -10)
     addonsHeader:SetJustifyH('LEFT')
 
     local totalAddonsLabel = DF.ui.Font(statsFrame, 10, 'Total:')

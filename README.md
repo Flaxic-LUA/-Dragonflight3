@@ -2,7 +2,7 @@
 
 A comprehensive UI overhaul for World of Warcraft Vanilla 1.12.1.
 
-**⚠️ Requires [SuperWoW 1.5+](https://github.com/balakethelock/SuperWoW)**
+**⚠️ Requires [SuperWoW 1.5+](https://github.com/balakethelock/SuperWoW) and [UnitXP SP3](https://codeberg.org/konaka/UnitXP_SP3)**
 
 ## Features
 
@@ -30,6 +30,9 @@ A comprehensive UI overhaul for World of Warcraft Vanilla 1.12.1.
 <td><img src="media/screenshots/prev7.PNG" width="300" height="200" style="object-fit: cover;"></td>
 <td><img src="media/screenshots/prev8.PNG" width="300" height="200" style="object-fit: cover;"></td>
 </tr>
+<tr>
+<td><img src="media/screenshots/prev9.PNG" width="300" height="200" style="object-fit: cover;"></td>
+</tr>
 </table>
 
 ## Installation
@@ -37,12 +40,6 @@ A comprehensive UI overhaul for World of Warcraft Vanilla 1.12.1.
 1. Download or clone this repository
 2. Copy `-Dragonflight3` folder into your `Interface/AddOns` directory
 3. Restart WoW or reload UI (`/reload`)
-
-## Requirements
-
-- **[SuperWoW 1.5+](https://github.com/balakethelock/SuperWoW)** (Required)
-- World of Warcraft 1.12.1
-- Both addon folders must be installed together
 
 ## Usage
 
