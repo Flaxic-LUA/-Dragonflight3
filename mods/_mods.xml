@@ -37,7 +37,7 @@
     <Include file="general\editmode.lua"/>
     <Include file="general\error.lua"/>
     <Include file="general\firstrun.lua"/>
-    <Include file="general\nocontroll.lua"/>
+    <Include file="general\nocontrol.lua"/>
     <Include file="general\uiparent.lua"/>
 
     <!-- MICROMENU -->

@@ -1,10 +1,10 @@
 UNLOCKDRAGONFLIGHT()
 
-DF:NewDefaults('nocontroll', {
+DF:NewDefaults('nocontrol', {
     enabled = {value = true},
     version = {value = '1.0'},
     gui = {
-        {tab = 'extras', subtab = 'nocontroll', 'General', 'Appearance', 'Size', 'Font'},
+        {tab = 'extras', subtab = 'nocontrol', 'General', 'Appearance', 'Size', 'Font'},
     },
 
     showInterrupts = {value = true, metadata = {element = 'checkbox', category = 'General', indexInCategory = 1, description = 'Show available interrupt spells'}},
@@ -39,7 +39,7 @@ DF:NewDefaults('nocontroll', {
 -- Solution: Set display duration to 2s in FindHighestPriorityDebuff, store timestamp when shown, hide frame in OnUpdate after 2s elapsed.
 -- This prevents frame from displaying during the bleed-only phase while maintaining normal behavior for actual stun duration.
 
-DF:NewModule('nocontroll', 1, function()
+DF:NewModule('nocontrol', 1, function()
     local libdebuff = DF.lib.libdebuff
     local GetPlayerBuffTexture = GetPlayerBuffTexture
     local GetPlayerBuffTimeLeft = GetPlayerBuffTimeLeft
@@ -206,7 +206,7 @@ DF:NewModule('nocontroll', 1, function()
 
     local bg = frame:CreateTexture(nil, 'BACKGROUND')
     bg:SetAllPoints(frame)
-    bg:SetTexture(media['tex:generic:nocontroll_bg.blp'])
+    bg:SetTexture(media['tex:generic:nocontrol_bg.blp'])
     bg:SetVertexColor(1, 1, 1, 1)
 
     local iconFrame = CreateFrame('Frame', 'NoControlIcon', frame)
@@ -220,7 +220,7 @@ DF:NewModule('nocontroll', 1, function()
 
     local iconBorder = cooldown:CreateTexture(nil, 'OVERLAY')
     iconBorder:SetAllPoints(cooldown)
-    iconBorder:SetTexture(media['tex:generic:nocontroll_border.blp'])
+    iconBorder:SetTexture(media['tex:generic:nocontrol_border.blp'])
 
     local nameFont = DF.ui.Font(frame, 14, '', {1, 1, 1}, 'LEFT', 'OUTLINE')
     nameFont:SetPoint('RIGHT', iconFrame, 'LEFT', -10, 0)
@@ -246,14 +246,14 @@ DF:NewModule('nocontroll', 1, function()
     glowTop:SetHeight(20)
     glowTop:SetPoint('BOTTOMLEFT', frame, 'TOPLEFT', 0, 0)
     glowTop:SetPoint('RIGHT', frame, 'TOPRIGHT', 0, 0)
-    glowTop:SetTexture(media['tex:generic:nocontroll_glow.blp'])
+    glowTop:SetTexture(media['tex:generic:nocontrol_glow.blp'])
     glowTop:Hide()
 
     local glowBottom = frame:CreateTexture(nil, 'OVERLAY')
     glowBottom:SetHeight(20)
     glowBottom:SetPoint('TOPLEFT', frame, 'BOTTOMLEFT', 0, 0)
     glowBottom:SetPoint('RIGHT', frame, 'BOTTOMRIGHT', 0, 0)
-    glowBottom:SetTexture(media['tex:generic:nocontroll_glow.blp'])
+    glowBottom:SetTexture(media['tex:generic:nocontrol_glow.blp'])
     glowBottom:SetTexCoord(0, 1, 1, 0)
     glowBottom:Hide()
 
@@ -308,7 +308,7 @@ DF:NewModule('nocontroll', 1, function()
             -- debugprint('Debuff '..i..': '..(effect or 'nil'))
             if effect and spells[effect] then
                 local spellData = spells[effect]
-                local typeEnabled = DF.profile.nocontroll['show'..spellData.type]
+                local typeEnabled = DF.profile.nocontrol['show'..spellData.type]
                 if typeEnabled then
                     local config = typeConfig[spellData.type]
                     local priority = config and config.priority or 999
@@ -390,12 +390,12 @@ DF:NewModule('nocontroll', 1, function()
 
         if maxData then
             local config = typeConfig[maxData.type]
-            if DF.profile.nocontroll.showSpellName then
+            if DF.profile.nocontrol.showSpellName then
                 nameFont:SetText(maxName)
             else
                 nameFont:SetText('')
             end
-            if DF.profile.nocontroll.showSpellLabel then
+            if DF.profile.nocontrol.showSpellLabel then
                 typeFont:SetText(config.label or maxData.type)
             else
                 typeFont:SetText('')
@@ -406,7 +406,7 @@ DF:NewModule('nocontroll', 1, function()
                 iconBorder:SetVertexColor(config.color[1], config.color[2], config.color[3], 1)
                 glowTop:SetVertexColor(config.color[1], config.color[2], config.color[3])
                 glowBottom:SetVertexColor(config.color[1], config.color[2], config.color[3])
-                if DF.profile.nocontroll.showGlow then
+                if DF.profile.nocontrol.showGlow then
                     glowTop:Show()
                     glowBottom:Show()
                 end
@@ -420,14 +420,14 @@ DF:NewModule('nocontroll', 1, function()
 
             local interruptSpellName = self:FindAvailableInterrupt(maxData.type)
 
-            if DF.profile.nocontroll.showInterrupts and interruptSpellName then
+            if DF.profile.nocontrol.showInterrupts and interruptSpellName then
                 local slot = spellSlotCache[interruptSpellName]
                 local trinketSlot = trinketSlotCache[interruptSpellName]
                 local interruptTexture = slot and GetSpellTexture(slot, BOOKTYPE_SPELL) or trinketSlot and GetInventoryItemTexture('player', trinketSlot)
                 if interruptTexture then
                     interruptIconTexture:SetTexture(interruptTexture)
                     interruptIconFrame:Show()
-                    if DF.profile.nocontroll.interruptIconOnly then
+                    if DF.profile.nocontrol.interruptIconOnly then
                         interruptLabelFont:SetText('')
                         interruptNameFont:SetText('')
                     else
@@ -476,8 +476,8 @@ DF:NewModule('nocontroll', 1, function()
             if currentSpellID == 'Pounce Bleed' and pounceBleedShowTime and GetTime() - pounceBleedShowTime > 2 then
                 frame:Hide()
             end
-            if DF.profile.nocontroll.showGlow then
-                if not DF.profile.nocontroll.disableGlowAnimation then
+            if DF.profile.nocontrol.showGlow then
+                if not DF.profile.nocontrol.disableGlowAnimation then
                     glowAlpha = glowAlpha + (glowDirection * 0.01)
                     if glowAlpha <= 0.2 then
                         glowAlpha = 0.2
@@ -627,5 +627,5 @@ DF:NewModule('nocontroll', 1, function()
         frame:OnAuraChange()
     end
 
-    DF:NewCallbacks('nocontroll', callbacks)
+    DF:NewCallbacks('nocontrol', callbacks)
 end)

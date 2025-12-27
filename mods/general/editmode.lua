@@ -278,6 +278,7 @@ DF:NewModule('editmode', 2, 'PLAYER_ENTERING_WORLD', function()
         RegisterFrame('DF_Party4Frame', 'frames')
         RegisterFrame('DF_ComboPointsContainer', 'frames')
         RegisterFrame('DF_DistanceFrame', 'frames')
+        RegisterFrame('DF_NoControlFrame', 'frames')
     end)
 
     editFrame:SetScript('OnHide', function()
