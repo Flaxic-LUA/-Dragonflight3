@@ -34,6 +34,8 @@ A comprehensive UI overhaul for World of Warcraft Vanilla 1.12.1.
 </tr>
 <tr>
 <td><img src="media/screenshots/prev9.PNG" width="300" height="200" style="object-fit: cover;"></td>
+<td><img src="media/screenshots/prev10.PNG" width="300" height="200" style="object-fit: cover;"></td>
+<td><img src="media/screenshots/prev15.PNG" width="300" height="200" style="object-fit: cover;"></td>
 </tr>
 </table>
 

@@ -75,6 +75,11 @@ function setup:CreateSlotButton(parent, frameName, slotIndex, bagID, buttonSize,
     btn:SetScript('OnEnter', function()
         if origOnEnter then origOnEnter() end
         local texture = GetContainerItemInfo(btn.bagID, btn.slotID)
+        if texture then
+            GameTooltip:SetOwner(btn, 'ANCHOR_RIGHT')
+            GameTooltip:SetBagItem(btn.bagID, btn.slotID)
+            GameTooltip:Show()
+        end
         if MerchantFrame:IsShown() and MerchantFrame.selectedTab == 1 and texture then
             ShowContainerSellCursor(btn.bagID, btn.slotID)
         elseif texture and IsControlKeyDown() then
@@ -85,6 +90,7 @@ function setup:CreateSlotButton(parent, frameName, slotIndex, bagID, buttonSize,
     local origOnLeave = btn:GetScript('OnLeave')
     btn:SetScript('OnLeave', function()
         if origOnLeave then origOnLeave() end
+        GameTooltip:Hide()
         ResetCursor()
     end)
 

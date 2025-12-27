@@ -1,25 +1,4 @@
 ---@diagnostic disable: duplicate-set-field
 -- AU Test file
-UNLOCKDRAGONFLIGHT()
+-- UNLOCKDRAGONFLIGHT()
 
--- local f = CreateFrame('Frame')
--- f:RegisterEvent('PLAYER_TARGET_CHANGED')
--- f:SetScript('OnEvent', function()
---     local exists, guid = UnitExists('target')
---     if exists then
---         debugprint('Target GUID: ' .. guid)
---     end
--- end)
--- local distFrame = CreateFrame('Frame')
--- distFrame:RegisterEvent('PLAYER_TARGET_CHANGED')
--- distFrame:SetScript('OnUpdate', function()
---     if UnitExists('target') then
---         local dist = UnitXP('distanceBetween', 'player', 'target')
---         debugprint('Distance: ' .. (dist or 'nil'))
---     end
--- end)
--- distFrame:SetScript('OnEvent', function()
---     if event == 'PLAYER_TARGET_CHANGED' and not UnitExists('target') then
---         debugprint('No target')
---     end
--- end)

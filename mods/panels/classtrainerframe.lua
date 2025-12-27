@@ -46,7 +46,7 @@ DF:NewModule('classtrainerframe', 1, function()
         local blackBg = CreateFrame('Frame', nil, customBg)
         blackBg:SetPoint('TOPLEFT', topWood, 'BOTTOMLEFT', 2, -5)
         blackBg:SetPoint('RIGHT', customBg, 'RIGHT', -2, 0)
-        blackBg:SetHeight(180)
+        blackBg:SetHeight(190)
         blackBg:SetBackdrop({
             bgFile = 'Interface\\Buttons\\WHITE8X8',
             edgeFile = 'Interface\\Tooltips\\UI-Tooltip-Border',

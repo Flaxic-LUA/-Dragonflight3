@@ -263,6 +263,7 @@ function libdebuff:UnitDebuff(unit, id)
     if texture then
         scanner:SetUnitDebuff(unit, id)
         effect = scanner:GetLine(1) or ''
+        -- debugprint('Scanner line 1: '..(effect or 'nil')..', texture: '..(texture or 'nil'))
     end
 
     local data = self.debuffs[unitName] and self.debuffs[unitName][unitLevel]

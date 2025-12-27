@@ -89,6 +89,37 @@ DF:NewModule('bagbar', 1, 'PLAYER_LOGIN', function()
         end
     end
 
+    helpers.ShowMainBagTooltip = function()
+        GameTooltip:SetOwner(mainBag, 'ANCHOR_LEFT')
+        GameTooltip:SetText(TEXT(BACKPACK_TOOLTIP), 1.0, 1.0, 1.0)
+        local keyBinding = GetBindingKey('TOGGLEBACKPACK')
+        if keyBinding then
+            GameTooltip:AppendText(' '..NORMAL_FONT_COLOR_CODE..'('..keyBinding..')'..FONT_COLOR_CODE_CLOSE)
+        end
+    end
+
+    helpers.ShowSmallBagTooltip = function(bagButton)
+        GameTooltip:SetOwner(bagButton, 'ANCHOR_LEFT')
+        if GameTooltip:SetInventoryItem('player', ContainerIDToInventoryID(bagButton:GetID() + 1)) then
+            local binding = GetBindingKey('TOGGLEBAG'..(4 - bagButton:GetID()))
+            if binding then
+                GameTooltip:AppendText(' '..NORMAL_FONT_COLOR_CODE..'('..binding..')'..FONT_COLOR_CODE_CLOSE)
+            end
+        else
+            GameTooltip:SetText(TEXT(EQUIP_CONTAINER), 1.0, 1.0, 1.0)
+        end
+    end
+
+    helpers.ShowKeyRingTooltip = function()
+        GameTooltip:SetOwner(keyRing, 'ANCHOR_LEFT')
+        GameTooltip:SetText(KEYRING, HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
+        GameTooltip:AddLine()
+    end
+
+    helpers.HideTooltip = function()
+        GameTooltip:Hide()
+    end
+
     helpers.SetupBarFade = function()
         local delay = DF.profile['bagbar']['fadeOutDelay']
         local wasEnabled = container.fadeEnabled
@@ -116,10 +147,10 @@ DF:NewModule('bagbar', 1, 'PLAYER_LOGIN', function()
             container:SetScript('OnLeave', fadeOut)
             mainBag:SetScript('OnEnter', function()
                 fadeIn()
-                -- DF.lib.ShowSimpleTooltip(mainBag, 'Backpack')
+                helpers.ShowMainBagTooltip()
             end)
             mainBag:SetScript('OnLeave', function()
-                -- DF.lib.HideActionTooltip()
+                helpers.HideTooltip()
                 fadeOut()
             end)
             expandButton:SetScript('OnEnter', function()
@@ -134,19 +165,19 @@ DF:NewModule('bagbar', 1, 'PLAYER_LOGIN', function()
             for i = 0, 3 do
                 smallBags[i]:SetScript('OnEnter', function()
                     fadeIn()
-                    -- DF.lib.ShowInventoryTooltip(this, 'player', ContainerIDToInventoryID(this:GetID() + 1))
+                    helpers.ShowSmallBagTooltip(this)
                 end)
                 smallBags[i]:SetScript('OnLeave', function()
-                    -- DF.lib.HideActionTooltip()
+                    helpers.HideTooltip()
                     fadeOut()
                 end)
             end
             keyRing:SetScript('OnEnter', function()
                 fadeIn()
-                -- DF.lib.ShowSimpleTooltip(keyRing, 'Key Ring')
+                helpers.ShowKeyRingTooltip()
             end)
             keyRing:SetScript('OnLeave', function()
-                -- DF.lib.HideActionTooltip()
+                helpers.HideTooltip()
                 fadeOut()
             end)
             container.fadeEnabled = true
@@ -158,10 +189,10 @@ DF:NewModule('bagbar', 1, 'PLAYER_LOGIN', function()
             container:SetScript('OnLeave', nil)
             container:SetScript('OnUpdate', nil)
             mainBag:SetScript('OnEnter', function()
-                -- DF.lib.ShowSimpleTooltip(mainBag, 'Backpack')
+                helpers.ShowMainBagTooltip()
             end)
             mainBag:SetScript('OnLeave', function()
-                -- DF.lib.HideActionTooltip()
+                helpers.HideTooltip()
             end)
             expandButton:SetScript('OnEnter', function()
                 local text = expandButton:GetChecked() and 'Collapse' or 'Expand'
@@ -172,17 +203,17 @@ DF:NewModule('bagbar', 1, 'PLAYER_LOGIN', function()
             end)
             for i = 0, 3 do
                 smallBags[i]:SetScript('OnEnter', function()
-                    -- DF.lib.ShowInventoryTooltip(this, 'player', ContainerIDToInventoryID(this:GetID() + 1))
+                    helpers.ShowSmallBagTooltip(this)
                 end)
                 smallBags[i]:SetScript('OnLeave', function()
-                    -- DF.lib.HideActionTooltip()
+                    helpers.HideTooltip()
                 end)
             end
             keyRing:SetScript('OnEnter', function()
-                -- DF.lib.ShowSimpleTooltip(keyRing, 'Key Ring')
+                helpers.ShowKeyRingTooltip()
             end)
             keyRing:SetScript('OnLeave', function()
-                -- DF.lib.HideActionTooltip()
+                helpers.HideTooltip()
             end)
             container.fadeTimer = nil
             container.fadeEnabled = nil

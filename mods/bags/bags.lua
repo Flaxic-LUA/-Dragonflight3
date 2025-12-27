@@ -317,6 +317,9 @@ DF:NewModule('bags', 1, 'PLAYER_ENTERING_WORLD', function()
                     oneBag:Show()
                 end
             end
+            _G.ToggleBag = function(id)
+                _G.ToggleBackpack()
+            end
             _G.OpenAllBags = function()
                 local gameMenu = getglobal('DF_GameMenuFrame')
                 if gameMenu and gameMenu:IsVisible() then
@@ -346,6 +349,20 @@ DF:NewModule('bags', 1, 'PLAYER_ENTERING_WORLD', function()
                     end
                 else
                     bag0:Show()
+                end
+            end
+            _G.ToggleBag = function(id)
+                local gameMenu = getglobal('DF_GameMenuFrame')
+                if gameMenu and gameMenu:IsVisible() then
+                    return
+                end
+                local bag = DF.setups.bags[id]
+                if bag then
+                    if bag:IsShown() then
+                        bag:Hide()
+                    else
+                        bag:Show()
+                    end
                 end
             end
             _G.OpenAllBags = function()

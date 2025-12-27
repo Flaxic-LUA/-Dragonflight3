@@ -13,7 +13,7 @@ DF:NewDefaults('error', {
 
     hideuierrors = {value = true, metadata = {element = 'checkbox', category = 'UI Errors', indexInCategory = 1, description = 'Hide UI error messages'}},
     printuierrors = {value = true, metadata = {element = 'checkbox', category = 'UI Errors', indexInCategory = 2, description = 'Print UI errors to chat', dependency = {key = 'hideuierrors', state = true}}},
-    printonlyooc = {value = false, metadata = {element = 'checkbox', category = 'UI Errors', indexInCategory = 3, description = 'Only print UI errors out of combat', dependency = {key = 'printuierrors', state = true}}},
+    printonlyooc = {value = true, metadata = {element = 'checkbox', category = 'UI Errors', indexInCategory = 3, description = 'Only print UI errors out of combat', dependency = {key = 'printuierrors', state = true}}},
 
 })
 

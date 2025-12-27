@@ -1,19 +1,3 @@
-
--------------------------------------------
--- local distFrame = CreateFrame('Frame')
--- distFrame:RegisterEvent('PLAYER_TARGET_CHANGED')
--- distFrame:SetScript('OnUpdate', function()
---     if UnitExists('target') then
---         local dist = UnitXP('distanceBetween', 'player', 'target')
---         debugprint('Distance: ' .. (dist or 'nil'))
---     end
--- end)
--- distFrame:SetScript('OnEvent', function()
---     if event == 'PLAYER_TARGET_CHANGED' and not UnitExists('target') then
---         debugprint('No target')
---     end
--- end)
--------------------------------------------
 -- local combat = {active = false, start = 0, log = {}}
 -- local playerGUID = nil
 
@@ -106,6 +90,10 @@
 -- --         end
 -- --     end
 -- -- end)
+
+
+
+
 -------------------------------------------
 -- -- playermodel availability check
 -- local testModel = CreateFrame('PlayerModel')

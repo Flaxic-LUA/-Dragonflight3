@@ -391,6 +391,24 @@ DF:NewModule('actionbars', 1, 'PLAYER_LOGIN', function()
         end
     end
 
+    helpers.ShowButtonTooltip = function(button)
+        button.highlight:Show()
+        GameTooltip:SetOwner(button, 'ANCHOR_RIGHT')
+        local id = button:GetID()
+        if id >= 200 and id <= 209 then
+            GameTooltip:SetShapeshift(id - 199)
+        elseif id >= 133 and id <= 142 then
+            GameTooltip:SetPetAction(id - 132)
+        else
+            GameTooltip:SetAction(id)
+        end
+    end
+
+    helpers.HideButtonTooltip = function(button)
+        button.highlight:Hide()
+        GameTooltip:Hide()
+    end
+
     helpers.SetupBarFadeAndHighlight = function(frame, buttons, delayKey, alphaKey, countKey)
         local delay = DF.profile['actionbars'][delayKey]
         local count = DF.profile['actionbars'][countKey] or table.getn(buttons)
@@ -405,6 +423,7 @@ DF:NewModule('actionbars', 1, 'PLAYER_LOGIN', function()
             for i = 1, count do
                 buttons[i]:SetScript('OnEnter', function()
                     if this.originalOnEnter then this.originalOnEnter() end
+                    helpers.ShowButtonTooltip(this)
                     if frame.fadeTimer then
                         frame.fadeTimer = nil
                     end
@@ -412,6 +431,7 @@ DF:NewModule('actionbars', 1, 'PLAYER_LOGIN', function()
                 end)
                 buttons[i]:SetScript('OnLeave', function()
                     if this.originalOnLeave then this.originalOnLeave() end
+                    helpers.HideButtonTooltip(this)
                     frame.fadeTimer = delay
                     frame:SetScript('OnUpdate', function()
                         if frame.fadeTimer then
@@ -436,8 +456,14 @@ DF:NewModule('actionbars', 1, 'PLAYER_LOGIN', function()
             frame.fadeTimer = nil
             frame.fadeEnabled = nil
             for i = 1, count do
-                buttons[i]:SetScript('OnEnter', buttons[i].originalOnEnter)
-                buttons[i]:SetScript('OnLeave', buttons[i].originalOnLeave)
+                buttons[i]:SetScript('OnEnter', function()
+                    if this.originalOnEnter then this.originalOnEnter() end
+                    helpers.ShowButtonTooltip(this)
+                end)
+                buttons[i]:SetScript('OnLeave', function()
+                    if this.originalOnLeave then this.originalOnLeave() end
+                    helpers.HideButtonTooltip(this)
+                end)
             end
             frame:SetAlpha(DF.profile['actionbars'][alphaKey])
         end

@@ -62,9 +62,8 @@ end
 
 function setup:UpdateBorder(button)
     if button.buffFilter == 'HARMFUL' then
-        local buffIndex = GetPlayerBuff(button:GetID(), 'HARMFUL')
-        if buffIndex >= 0 then
-            local debuffType = GetPlayerBuffDispelType(buffIndex)
+        if button.buffIndex and button.buffIndex >= 0 then
+            local debuffType = GetPlayerBuffDispelType(button.buffIndex)
             local color = self.debuffColors[debuffType] or self.debuffColors['none']
             button.border:SetVertexColor(color[1], color[2], color[3])
             button.border:Show()
@@ -75,9 +74,8 @@ function setup:UpdateBorder(button)
 end
 
 function setup:UpdateCount(button)
-    local buffIndex = GetPlayerBuff(button:GetID(), button.buffFilter)
-    if buffIndex >= 0 then
-        local count = GetPlayerBuffApplications(buffIndex)
+    if button.buffIndex and button.buffIndex >= 0 then
+        local count = GetPlayerBuffApplications(button.buffIndex)
         if count > 1 then
             button.count:SetText(count)
             button.count:Show()
@@ -224,12 +222,13 @@ function setup:OnEvent(button)
     end)
     button:SetScript('OnEnter', function()
         if button.buffIndex and button.buffIndex >= 0 then
-            local isDebuff = button.buffFilter == 'HARMFUL'
-            -- DF.lib.ShowBuffTooltip(button, 'player', button:GetID() + 1, isDebuff)
+            GameTooltip:SetOwner(this, 'ANCHOR_BOTTOMRIGHT')
+            GameTooltip:SetPlayerBuff(button.buffIndex)
+            GameTooltip:Show()
         end
     end)
     button:SetScript('OnLeave', function()
-        -- DF.lib.HideActionTooltip()
+        GameTooltip:Hide()
     end)
 end
 

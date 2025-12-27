@@ -376,8 +376,9 @@ end
 
 function setup:ShowAllButtons()
     self.isDragging = true
+    local bonusOffset = GetBonusBarOffset()
     local barNames = {'mainBar', 'multibar1', 'multibar2', 'multibar3', 'multibar4', 'multibar5'}
-    local barFrames = {self.mainBar, self.multiBars[1], self.multiBars[2], self.multiBars[3], self.multiBars[4], self.multiBars[5]}
+    local barFrames = {bonusOffset > 0 and self.bonusBars[bonusOffset] or self.mainBar, self.multiBars[1], self.multiBars[2], self.multiBars[3], self.multiBars[4], self.multiBars[5]}
 
     for idx = 1, table.getn(barNames) do
         local barName = barNames[idx]
@@ -649,10 +650,9 @@ function setup:UpdateButtonReactive(button)
     local id = button:GetID()
     if id >= 133 or not HasAction(id) then return end
 
-    GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
-    GameTooltip:SetAction(id)
-    local spellName = GameTooltipTextLeft1:GetText()
-    GameTooltip:Hide()
+    local scanner = DF.lib.libtipscan:GetScanner('reactive')
+    scanner:SetAction(id)
+    local spellName = scanner:GetLine(1)
 
     if not spellName or not self.reactiveSpells[spellName] then
         button.reactive:Hide()
@@ -663,7 +663,6 @@ function setup:UpdateButtonReactive(button)
 
     if isUsable and not oom then
         button.reactive:Show()
-        -- debugprint('Reactive PROC: '..spellName)
     else
         button.reactive:Hide()
     end
@@ -813,6 +812,14 @@ function setup:UpdateBonusBarVisibility()
                 self.bonusBars[i]:Show()
                 self.mainBar.decorationLeftFrame:SetParent(self.bonusBars[i])
                 self.mainBar.decorationRightFrame:SetParent(self.bonusBars[i])
+                if DF.profile['actionbars']['mainBarDecorationPosition'] ~= 'none' then
+                    if DF.profile['actionbars']['mainBarDecorationPosition'] == 'left' or DF.profile['actionbars']['mainBarDecorationPosition'] == 'both' then
+                        self.mainBar.decorationLeftFrame:Show()
+                    end
+                    if DF.profile['actionbars']['mainBarDecorationPosition'] == 'right' or DF.profile['actionbars']['mainBarDecorationPosition'] == 'both' then
+                        self.mainBar.decorationRightFrame:Show()
+                    end
+                end
             else
                 self.bonusBars[i]:Hide()
             end

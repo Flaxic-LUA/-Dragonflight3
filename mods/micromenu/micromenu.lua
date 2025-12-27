@@ -44,6 +44,25 @@ DF:NewModule('micro', 1, 'PLAYER_LOGIN', function()
         setup.frame:SetWidth((size + spacing) * table.getn(setup.buttons))
     end
 
+    helpers.ShowButtonTooltip = function(button)
+        local data = button.data
+        local globalName = string.upper(data.name)..'_BUTTON'
+        if data.name == 'Spellbook' then globalName = 'SPELLBOOK_ABILITIES_BUTTON' end
+        if data.name == 'Socials' then globalName = 'SOCIAL_BUTTON' end
+        local tooltipText = _G[globalName] or data.name
+        local keyBinding = GetBindingKey(data.action)
+        if keyBinding then
+            tooltipText = tooltipText..' '..NORMAL_FONT_COLOR_CODE..'('..keyBinding..')'..FONT_COLOR_CODE_CLOSE
+        end
+        local newbieName = data.name == 'Socials' and 'SOCIAL' or string.upper(data.name)
+        local newbieText = _G['NEWBIE_TOOLTIP_'..newbieName]
+        GameTooltip_AddNewbieTip(tooltipText, 1.0, 1.0, 1.0, newbieText)
+    end
+
+    helpers.HideTooltip = function()
+        GameTooltip:Hide()
+    end
+
     helpers.SetupFade = function()
         local delay = DF.profile['micro']['fadeOutDelay']
         if not setup.frame.originalScriptsStored then
@@ -57,6 +76,7 @@ DF:NewModule('micro', 1, 'PLAYER_LOGIN', function()
             for i = 1, table.getn(setup.buttons) do
                 setup.buttons[i]:SetScript('OnEnter', function()
                     if this.originalOnEnter then this.originalOnEnter() end
+                    helpers.ShowButtonTooltip(this)
                     if setup.frame.fadeTimer then
                         setup.frame.fadeTimer = nil
                     end
@@ -64,6 +84,7 @@ DF:NewModule('micro', 1, 'PLAYER_LOGIN', function()
                 end)
                 setup.buttons[i]:SetScript('OnLeave', function()
                     if this.originalOnLeave then this.originalOnLeave() end
+                    helpers.HideTooltip()
                     setup.frame.fadeTimer = delay
                     setup.frame:SetScript('OnUpdate', function()
                         if setup.frame.fadeTimer then
@@ -86,8 +107,14 @@ DF:NewModule('micro', 1, 'PLAYER_LOGIN', function()
             setup.frame.fadeTimer = nil
             setup.frame.fadeEnabled = nil
             for i = 1, table.getn(setup.buttons) do
-                setup.buttons[i]:SetScript('OnEnter', setup.buttons[i].originalOnEnter)
-                setup.buttons[i]:SetScript('OnLeave', setup.buttons[i].originalOnLeave)
+                setup.buttons[i]:SetScript('OnEnter', function()
+                    if this.originalOnEnter then this.originalOnEnter() end
+                    helpers.ShowButtonTooltip(this)
+                end)
+                setup.buttons[i]:SetScript('OnLeave', function()
+                    if this.originalOnLeave then this.originalOnLeave() end
+                    helpers.HideTooltip()
+                end)
             end
             setup.frame:SetAlpha(DF.profile['micro']['alpha'])
         end

@@ -197,6 +197,12 @@ DF:NewModule('chat', 1, function()
         PlaySound('igChatEmoteButton')
         ToggleDropDownMenu(1, nil, ChatFrame1TabDropDown, 'DF_ChatMenuButton', 0, 0)
     end)
+    menuBtn:SetScript('OnEnter', function()
+        GameTooltip_AddNewbieTip('Chat', 1.0, 1.0, 1.0, _G['NEWBIE_TOOLTIP_CHATMENU'])
+    end)
+    menuBtn:SetScript('OnLeave', function()
+        GameTooltip:Hide()
+    end)
 
     -- callbacks
     local callbacks = {}

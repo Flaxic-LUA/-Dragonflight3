@@ -42,30 +42,17 @@ local setup = {
     },
 }
 
--- TODO fix for now for dropdown
 function setup:ShowRightClickMenu(unit)
     if unit == 'player' then
-        ToggleDropDownMenu(1, nil, PlayerFrameDropDown, 'cursor')
+        ToggleDropDownMenu(1, nil, PlayerFrameDropDown, this, 0, 0)
     elseif unit == 'target' then
-        ToggleDropDownMenu(1, nil, TargetFrameDropDown, 'cursor')
+        ToggleDropDownMenu(1, nil, TargetFrameDropDown, this, 0, 0)
     elseif unit == 'pet' then
-        ToggleDropDownMenu(1, nil, PetFrameDropDown, 'cursor')
-    elseif unit == 'party' or strfind(unit, 'party%d') then
-        local id = string.gsub(unit, 'party', '')
-        ToggleDropDownMenu(1, nil, getglobal('PartyMemberFrame' .. id .. 'DropDown'), 'cursor')
+        ToggleDropDownMenu(1, nil, PetFrameDropDown, this, 0, 0)
+    elseif strfind(unit, 'party%d') then
+        ToggleDropDownMenu(1, nil, getglobal('PartyMemberFrame' .. this.id .. 'DropDown'), this, 0, 0)
     end
 end
-
-function setup:OnMouseUp()
-    if arg1 == 'RightButton' then
-        local unit = select(2, this:GetUnit())
-        if unit then
-            setup:ShowRightClickMenu(unit)
-        end
-    end
-end
-
-GameTooltip:SetScript('OnMouseUp', setup.OnMouseUp)
 
 -- create
 function setup:CreateUnitFrame(unit, width, height)
@@ -131,6 +118,26 @@ function setup:CreateUnitFrame(unit, width, height)
             setup:ShowRightClickMenu(this.unit)
         end
     end)
+
+    if unit == 'player' then
+        unitFrame:SetScript('OnEnter', function()
+            GameTooltip_SetDefaultAnchor(GameTooltip, this)
+            GameTooltip_AddNewbieTip(PARTY_OPTIONS_LABEL, 1.0, 1.0, 1.0, NEWBIE_TOOLTIP_PARTYOPTIONS)
+        end)
+        unitFrame:SetScript('OnLeave', function()
+            GameTooltip:Hide()
+        end)
+    elseif unit == 'target' then
+        unitFrame:SetScript('OnEnter', function()
+            GameTooltip_SetDefaultAnchor(GameTooltip, this)
+            GameTooltip:SetUnit(this.unit)
+            local r, g, b = GameTooltip_UnitColor(this.unit)
+            GameTooltipTextLeft1:SetTextColor(r, g, b)
+        end)
+        unitFrame:SetScript('OnLeave', function()
+            GameTooltip:Hide()
+        end)
+    end
 
     unitFrame.hpBar = DF.animations.CreateStatusBar(unitFrame, 120, 20, nil, frameName..'.hpBar')
     unitFrame.hpBar:SetFillColor(0, 1, 0, 1)
@@ -293,6 +300,15 @@ function setup:CreateUnitFrame(unit, width, height)
         buff:SetSize(size, size)
         buff.icon = buff:CreateTexture(nil, 'ARTWORK')
         buff.icon:SetAllPoints(buff)
+        buff.buffIndex = i
+        buff.parentUnit = unit
+        buff:SetScript('OnEnter', function()
+            GameTooltip:SetOwner(this, 'ANCHOR_RIGHT')
+            GameTooltip:SetUnitBuff(this.parentUnit, this.buffIndex)
+        end)
+        buff:SetScript('OnLeave', function()
+            GameTooltip:Hide()
+        end)
         buff:Hide()
         unitFrame.buffs[i] = buff
 
@@ -312,6 +328,15 @@ function setup:CreateUnitFrame(unit, width, height)
         debuff.count:SetFont('Fonts\\FRIZQT__.TTF', 8, 'OUTLINE')
         debuff.count:SetPoint('BOTTOMRIGHT', debuff, 'BOTTOMRIGHT', 0, 0)
         debuff.count:Hide()
+        debuff.debuffIndex = i
+        debuff.parentUnit = unit
+        debuff:SetScript('OnEnter', function()
+            GameTooltip:SetOwner(this, 'ANCHOR_RIGHT')
+            GameTooltip:SetUnitDebuff(this.parentUnit, this.debuffIndex)
+        end)
+        debuff:SetScript('OnLeave', function()
+            GameTooltip:Hide()
+        end)
         debuff:Hide()
         unitFrame.debuffs[i] = debuff
     end
